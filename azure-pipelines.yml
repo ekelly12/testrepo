@@ -15,7 +15,7 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - bash: "eval $(cat signals/build.sh)"
+          - bash: ". signals/setup.sh"
             displayName: 'Setting up core dumps'
 
   - stage: BuildUbuntu
@@ -26,5 +26,5 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - bash: ./signals/build.sh
+          - bash: "$BUILD_SOURCE/build.sh"
             displayName: "Building"
