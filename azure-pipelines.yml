@@ -15,10 +15,10 @@ stages:
         pool:
           vmImage: 'ubtunu-latest'
         steps:
-          - script: "eval $(cat signals/build.sh)"
+          - bash: "eval $(cat signals/build.sh)"
             displayName: 'Setting up core dumps'
 
-  - stage: Build(Ubuntu)
+  - stage: BuildUbuntu
     displayName: "Building Ubtuntu"
     jobs:
       - job: signalsBuild
