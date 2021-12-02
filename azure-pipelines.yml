@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 - stage: BuildENV
-  displayName: Build Enivornment (Ubuntu)
+  displayName: "Build Enivornment (Ubuntu)"
   jobs:
   - job: CoreConfig
     displayName: "Configuring the system to core dump"
@@ -22,7 +22,7 @@ pool:
         displayName: 'Setting up core dumps'
 
 - stage: Build(Ubuntu)
-  displayName: Building Ubtuntu
+  displayName: "Building Ubtuntu"
   jobs:
     - job: signalsBuild
       displayName: "iSegfault build"
