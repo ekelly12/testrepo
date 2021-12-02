@@ -10,14 +10,14 @@ stages:
   - stage: BuildENV
     displayName: "Build Enivornment (Ubuntu)"
     jobs:
-    - job: CoreConfig
-      displayName: "Configuring the system to core dump"
-      timeOutInMinutes: 1
-      pool:
-        vmImage: 'ubtunu-latest'
-      steps:
-        - script: eval $(cat signals/build.sh)
-          displayName: 'Setting up core dumps'
+      - job: CoreConfig
+        displayName: "Configuring the system to core dump"
+        timeOutInMinutes: 1
+        pool:
+          vmImage: 'ubtunu-latest'
+        steps:
+          - script: "eval $(cat signals/build.sh)"
+            displayName: 'Setting up core dumps'
 
   - stage: Build(Ubuntu)
     displayName: "Building Ubtuntu"
@@ -29,4 +29,4 @@ stages:
           vmImage: 'ubuntu-latest'
         steps:
           - bash: ./signals/build.sh
-            displayName: 'Building
+            displayName: "Building"
