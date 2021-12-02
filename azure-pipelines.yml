@@ -13,7 +13,7 @@ stages:
       - job: CoreConfig
         displayName: "Configuring the system to core dump"
         pool:
-          vmImage: 'ubtunu-latest'
+          vmImage: ubuntu-latest
         steps:
           - bash: "eval $(cat signals/build.sh)"
             displayName: 'Setting up core dumps'
@@ -24,7 +24,7 @@ stages:
       - job: signalsBuild
         displayName: "iSegfault build"
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: ubuntu-latest
         steps:
           - bash: ./signals/build.sh
             displayName: "Building"
