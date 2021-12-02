@@ -1,34 +1,32 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# Test pipeline
 
 trigger:
-- main
+  - main
 
 pool:
   vmImage: ubuntu-latest
 
-- stage: BuildENV
-  displayName: "Build Enivornment (Ubuntu)"
-  jobs:
-  - job: CoreConfig
-    displayName: "Configuring the system to core dump"
-    timeOutInMinutes: 1
-    pool:
-      vmImage: 'ubtunu-latest'
-    steps:
-      - script: eval $(cat signals/build.sh)
-        displayName: 'Setting up core dumps'
-
-- stage: Build(Ubuntu)
-  displayName: "Building Ubtuntu"
-  jobs:
-    - job: signalsBuild
-      displayName: "iSegfault build"
+stages:
+  - stage: BuildENV
+    displayName: "Build Enivornment (Ubuntu)"
+    jobs:
+    - job: CoreConfig
+      displayName: "Configuring the system to core dump"
       timeOutInMinutes: 1
       pool:
-        vmImage: 'ubuntu-latest'
+        vmImage: 'ubtunu-latest'
       steps:
-        - bash: ./signals/build.sh
-          displayName: 'Building
+        - script: eval $(cat signals/build.sh)
+          displayName: 'Setting up core dumps'
+
+  - stage: Build(Ubuntu)
+    displayName: "Building Ubtuntu"
+    jobs:
+      - job: signalsBuild
+        displayName: "iSegfault build"
+        timeOutInMinutes: 1
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - bash: ./signals/build.sh
+            displayName: 'Building
