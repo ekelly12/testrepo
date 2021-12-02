@@ -19,7 +19,7 @@ stages:
             name: printvar
             displayName: 'Setting up core dumps'
           - bash: |
-              echo "BUILD_SOURCE: $(BUILD_SOURCE)"
+              echo "BUILD_SOURCE: $BUILD_SOURCE"
 
   - stage: BuildUbuntu
     dependsOn: BuildENV

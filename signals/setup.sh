@@ -1,8 +1,11 @@
 #!/bin/bash
 
 export BUILD_ROOT=/home/ekelly/ek
-export BUILD_LIB="$BUILD_ROOT/signals"
-export BUILD_SOURCE="$BUILD_ROOT/signals"
+
+cd $BUILD_ROOT
+
+export BUILD_LIB="./signals"
+export BUILD_SOURCE="./signals"
 
 echo "##vso[task.setvariable variable=BUILD_ROOT;isOutput=true]$BUILD_ROOT"
 echo "##vso[task.setvariable variable=BUILD_LIB;isOutput=true]$BUILD_LIB"
