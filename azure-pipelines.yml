@@ -26,5 +26,5 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - bash: "$BUILD_SOURCE/build.sh"
+          - bash: "$(BUILD_SOURCE)/build.sh"
             displayName: "Building"
