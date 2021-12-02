@@ -29,8 +29,16 @@ stages:
     jobs:
       - job: signalsBuild
         displayName: "iSegfault build"
-        pool:
-          vmImage: ubuntu-latest
+        #pool:
+          #vmImage: ubuntu-latest
         steps:
           - bash: $(BUILD_SOURCE)/build.sh
             displayName: "Building"
+
+  - stage:
+    displayName: "Run Tests"
+    jobs:
+      - job:
+        displayName: "Failing, utterly"
+        steps:
+          - bash: "./isegfault"
