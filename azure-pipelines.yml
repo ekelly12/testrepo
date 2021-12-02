@@ -12,7 +12,6 @@ stages:
     jobs:
       - job: CoreConfig
         displayName: "Configuring the system to core dump"
-        timeOutInMinutes: 1
         pool:
           vmImage: 'ubtunu-latest'
         steps:
@@ -24,7 +23,6 @@ stages:
     jobs:
       - job: signalsBuild
         displayName: "iSegfault build"
-        timeOutInMinutes: 1
         pool:
           vmImage: 'ubuntu-latest'
         steps:
