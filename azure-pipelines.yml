@@ -16,7 +16,7 @@ stages:
           vmImage: ubuntu-latest
         steps:
           - bash: ". signals/setup.sh"
-            name: printVar
+            name: printvar
             displayName: 'Setting up core dumps'
           - bash: |
               echo "BUILD_SOURCE: $(BUILD_SOURCE)"
