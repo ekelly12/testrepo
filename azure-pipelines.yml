@@ -9,11 +9,26 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- stage: BuildENV
+  displayName: Build Enivornment (Ubuntu)
+  jobs:
+  - job: CoreConfig
+    displayName: "Configuring the system to core dump"
+    timeOutInMinutes: 1
+    pool:
+      vmImage: 'ubtunu-latest'
+    steps:
+      - script: eval $(cat signals/build.sh)
+        displayName: 'Setting up core dumps'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- stage: Build(Ubuntu)
+  displayName: Building Ubtuntu
+  jobs:
+    - job: signalsBuild
+      displayName: "iSegfault build"
+      timeOutInMinutes: 1
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+        - bash: ./signals/build.sh
+          displayName: 'Building
