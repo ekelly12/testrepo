@@ -18,9 +18,7 @@ stages:
           - bash: ". signals/setup.sh"
             displayName: 'Setting up core dumps'
           - bash: |
-              echo "##vso[task.setvariable variable=BUILD_SOURCE]heyhey"
-          - bash: |
-              echo "var: $(BUILD_SOURCE)"
+              echo "BUILD_SOURCE: $(BUILD_SOURCE)"
 
   - stage: BuildUbuntu
     dependsOn: BuildENV
