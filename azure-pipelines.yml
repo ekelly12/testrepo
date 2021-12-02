@@ -23,7 +23,10 @@ stages:
               echo "var: $(BUILD_SOURCE)"
 
   - stage: BuildUbuntu
+    dependsOn: BuildENV
     displayName: "Building Ubtuntu"
+    variables:
+      BUILD_SOURCE: $[ stageDependencies.BuildENV.CoreConfig.outputs['printvar.BUILD_SOURCE'] ]
     jobs:
       - job: signalsBuild
         displayName: "iSegfault build"
