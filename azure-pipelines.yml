@@ -32,7 +32,10 @@ stages:
             displayName: "Building"
 
   - stage:
+    dependsOn: BuildUbuntu
     displayName: "Run Tests"
+    variables:
+      BUILD_SOURCE: $[ stageDependencies.BuildENV.CoreConfig.outputs['printvar.BUILD_SOURCE'] ]
     jobs:
       - job:
         displayName: "Failing, utterly"
