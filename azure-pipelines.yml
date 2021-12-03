@@ -28,7 +28,7 @@ stages:
       - job: signalsBuild
         displayName: "iSegfault build"
         steps:
-          - bash: ". $(BUILD_SOURCE)/build.sh"
+          - bash: "./$(BUILD_SOURCE)/build.sh"
             displayName: "Building"
 
   - stage:
@@ -40,5 +40,5 @@ stages:
       - job:
         displayName: "Failing, utterly"
         steps:
-          - bash: ". signals/isegfault-test.sh"
+          - bash: "./signals/isegfault-test.sh"
             displayName: "Segmentation fault test"

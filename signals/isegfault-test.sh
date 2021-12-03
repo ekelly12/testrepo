@@ -11,7 +11,4 @@ else
 	echo "isegfault returned an exist code other than 139."
 	echo "exit code returned: $returnCode"
 	exit 1
-
-
-
-exit 0
+fi
