@@ -17,4 +17,4 @@ echo "Cleansing core dump files."
 #./$BUILD_LIB/cleanse-core-dump-files.sh
 
 ulimit -c unlimited \
-&& sysctl -w kernel.core_pattern=/tmp/core/%e-%p-%s-%u.core
+&& sudo sysctl -w kernel.core_pattern=/tmp/core/%e-%p-%s-%u.core
