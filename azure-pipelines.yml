@@ -40,5 +40,5 @@ stages:
       - job:
         displayName: "Failing, utterly"
         steps:
-          - bash: $(BUILD_SOURCE)/isegfault-test.sh
-          #- bash: "eval $(./isegfault)"
+          - bash: signals/isegfault-test.sh
+            displayName: "Segmentation fault test"
