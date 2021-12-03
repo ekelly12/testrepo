@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run isegfault and captire the exit code.
-returnCode=$(./isegfault || echo $?)
+returnCode=$($BUILD_ROOT/out/isegfault || echo $?)
 
 # Test to see if wthe expected exit code has been receieved.
 if [ $returnCode == 139 ]
