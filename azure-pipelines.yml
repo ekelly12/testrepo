@@ -18,7 +18,7 @@ stages:
           - bash: ". utils/setup.sh"
             name: printvar
             displayName: "Setting up core dumps"
-          - bash: "ulimit -Sa unlimited && ulimit -Sa"
+          - bash: "ulimit -Sc 9999999 && ulimit -Sa"
             displayName: "Core dump file limit size(soft)"
           - bash: "echo $(BUILD_ROOT)"
             displayName: "Build root"
