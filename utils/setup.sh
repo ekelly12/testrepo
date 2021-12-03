@@ -16,6 +16,9 @@ echo "##vso[task.setvariable variable=BUILD_OUT_DIR]$BUILD_OUT_DIR"
 echo "Cleansing core dump files."
 #./$BUILD_LIB/cleanse-core-dump-files.sh
 
+# Set the core file size limits.
 ulimit -Hc unlimited
-ulimit -c unlimited
+ulimit -Sc 8888888
+
+# Set the rules for the core dump.
 sudo sysctl -w kernel.core_pattern=/tmp/core/%e-%p-%s-%u.core
