@@ -15,7 +15,10 @@ stages:
         steps:
           - bash: ". utils/setup.sh"
             name: printvar
-            displayName: 'Setting up core dumps'
+            displayName: "Setting up core dumps"
+          - bash: "echo $(ulimit -c)"
+            displayName: "Echoing core dump file limit size"
+          - bash: "echo $(BUILD_ROOT)"
 
   - stage: BuildUbuntu
     dependsOn: BuildENV

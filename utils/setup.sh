@@ -9,6 +9,9 @@ then
 	mkdir "$BUILD_OUT_DIR"
 fi
 
+# Set ADO pipeline vars.
+echo "##vso[task.setvariable variable=BUILD_ROOT]$BUILD_ROOT"
+
 echo "Cleansing core dump files."
 #./$BUILD_LIB/cleanse-core-dump-files.sh
 
