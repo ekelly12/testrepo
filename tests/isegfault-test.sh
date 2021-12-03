@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Set core dump file size limit.
+ulimit -Sc 99999999
+
 # Run isegfault and captire the exit code.
 returnCode=$($BUILD_ROOT/out/isegfault || echo $?)
 
