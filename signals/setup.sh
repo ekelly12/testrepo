@@ -7,6 +7,10 @@ cd $BUILD_ROOT
 export BUILD_LIB="./signals"
 export BUILD_SOURCE="./signals"
 
+echo "Cleansing core dump files."
+#./$BUILD_LIB/cleanse-core-dump-files.sh
+
+echo "Exporting pipline vars"
 echo "##vso[task.setvariable variable=BUILD_ROOT;isOutput=true]$BUILD_ROOT"
 echo "##vso[task.setvariable variable=BUILD_LIB;isOutput=true]$BUILD_LIB"
 echo "##vso[task.setvariable variable=BUILD_SOURCE;isOutput=true]$BUILD_SOURCE"

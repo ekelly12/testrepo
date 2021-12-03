@@ -12,8 +12,6 @@ stages:
     jobs:
       - job: CoreConfig
         displayName: "Configuring the system to core dump"
-        pool:
-          vmImage: ubuntu-latest
         steps:
           - bash: ". signals/setup.sh"
             name: printvar
@@ -23,14 +21,12 @@ stages:
 
   - stage: BuildUbuntu
     dependsOn: BuildENV
-    displayName: "Building Ubtuntu"
+    displayName: "Building then testing the build"
     variables:
       BUILD_SOURCE: $[ stageDependencies.BuildENV.CoreConfig.outputs['printvar.BUILD_SOURCE'] ]
     jobs:
       - job: signalsBuild
         displayName: "iSegfault build"
-        #pool:
-          #vmImage: ubuntu-latest
         steps:
           - bash: $(BUILD_SOURCE)/build.sh
             displayName: "Building"
@@ -41,4 +37,5 @@ stages:
       - job:
         displayName: "Failing, utterly"
         steps:
-          - bash: "eval $(./isegfault)"
+          - bash: $(BUILD_SOURCE)/isegfault-test.sh
+          #- bash: "eval $(./isegfault)"
