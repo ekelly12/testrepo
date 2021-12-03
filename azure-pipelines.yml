@@ -20,7 +20,7 @@ stages:
             displayName: "Core dump file limit size"
           - bash: "echo $(BUILD_ROOT)"
             displayName: "Build root"
-          - base: "echo sysclt -a | grep core"
+          - bash: "echo sysclt -a | grep core"
             displayName: "System setting for dumps"
 
   - stage: BuildUbuntu
