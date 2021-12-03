@@ -16,5 +16,6 @@ echo "##vso[task.setvariable variable=BUILD_OUT_DIR]$BUILD_OUT_DIR"
 echo "Cleansing core dump files."
 #./$BUILD_LIB/cleanse-core-dump-files.sh
 
-ulimit -c unlimited \
-&& sudo sysctl -w kernel.core_pattern=/tmp/core/%e-%p-%s-%u.core
+ulimit -Hc unlimited
+ulimit -c unlimited
+sudo sysctl -w kernel.core_pattern=/tmp/core/%e-%p-%s-%u.core

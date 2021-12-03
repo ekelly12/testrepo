@@ -16,8 +16,8 @@ stages:
           - bash: ". utils/setup.sh"
             name: printvar
             displayName: "Setting up core dumps"
-          - bash: "echo $(ulimit -c)"
-            displayName: "Core dump file limit size"
+          - bash: "ulimit -c"
+            displayName: "Core dump file limit size(soft)"
           - bash: "echo $(BUILD_ROOT)"
             displayName: "Build root"
           - bash: "sudo sysctl -a | grep core"
