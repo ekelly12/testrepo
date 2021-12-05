@@ -13,7 +13,7 @@ stages:
       - job: CoreConfig
         displayName: "Configuring the system to core dump"
         steps:
-          - bash: "./utils/setup.sh . $(Agent.BuildDirectory)"
+          - bash: "./utils/setup.sh . $(Build.BinariesDirectory)"
             name: printvar
             displayName: "Setting up system-wide environment"
           - bash: "sudo sysctl -a | grep kernel.core_pattern"
@@ -26,19 +26,11 @@ stages:
       - job: signalsBuild
         displayName: "iSegfault build"
         steps:
-          - bash: "./isegfault/build.sh . $(Agent.BuildDirectory)"
+          - bash: "./isegfault/build.sh . $(Build.BinariesDirectory)"
             displayName: "Building"
-
-  - stage:
-    dependsOn: BuildUbuntu
-    displayName: "Run Tests"
-    jobs:
-      - job:
-        displayName: "Failing, utterly"
-        steps:
-          - bash: "ls -la $(Agent.BuildDirectory)/b"
+          - bash: "ls -la $(Build.BinariesDirectory)"
             displayName: "Dump of build bin folder"
-          - bash: "./tests/isegfault-test.sh $(Agent.BuildDirectory)"
+          - bash: "./tests/isegfault-test.sh $(Build.BinariesDirectory)"
             displayName: "Segmentation fault test"
           - bash: "ls -l /tmp/core"
             displayName: "Contents of /tmp/core"
