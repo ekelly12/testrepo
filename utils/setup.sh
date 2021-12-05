@@ -14,8 +14,9 @@ fi
 coreDumpDir=/tmp/core
 if [ ! -d $coreDumpDir ]
 then
-    retCode=$(mkdir $coreDumpDir)
-	if [ $retCode != 0 ]
+    mkdir $coreDumpDir
+	retCode=$?
+	if [ ! $retCode == 0 ]
 	then
 		echo "Failed to create the core dump directory"
 		exit $retCode
