@@ -36,7 +36,7 @@ stages:
       - job:
         displayName: "Failing, utterly"
         steps:
-          - bash: "ls -la $(Agent.BuildDirectory)"
+          - bash: "ls -la $(Agent.BuildDirectory)/b"
             displayName: "Dump of build bin folder"
           - bash: "./tests/isegfault-test.sh $(Agent.BuildDirectory)"
             displayName: "Segmentation fault test"
