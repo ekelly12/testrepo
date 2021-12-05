@@ -1,13 +1,26 @@
 #!/bin/bash
 
-unset BUILD_ROOT
-export BUILD_ROOT=$(pwd -P)
-export BUILD_OUT_DIR="out"
+# Check for required parameters.
+if [ -z $1 ]
+then
+	echo "The BUILD_ROOT parameter is empty"
+	exit 1
+fi
+BUILD_ROOT=$1
+echo "BUILD_ROOT set to: $BUILD_ROOT"
+
+if [ -z $2 ]
+then
+    echo "The OUT_DIR parameter is empty"
+    exit 1
+fi
+OUT_DIR=$2
+echo "OUT_DIR set to: $OUT_DIR"
 
 # Create the output directory if it doesn't already exist.
-if [ ! -d "$BUILD_OUT_DIR" ]
-then
-	mkdir "$BUILD_OUT_DIR"
+if [ ! -d "$OUT_DIR" ] 
+then 
+	mkdir "$OUT_DIR" 
 fi
 
 # Create directory for core dumps to be written to.
@@ -23,7 +36,7 @@ then
 	fi
 else
 	echo "Cleansing core dump files."
-	./utils/cleanse-core-dump-files.sh
+	./utils/cleanse-core-dump-files.sh $coreDumpDir
 fi
 
 # Set the rules for the core dump.

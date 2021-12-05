@@ -1,5 +1,14 @@
 #!/bin/bash
 
+if [ -z $1 ]
+then
+    echo "The OUT_DIR parameter is empty"
+    exit 1
+fi
+
+OUT_DIR=$1
+echo "OUT_DIR set to: $OUT_DIR"
+
 # Set core dump file size limit.
 ulimit -Sc 99999999
 
@@ -7,7 +16,7 @@ coreFileSize=$(ulimit -Sc)
 echo "Core dump file size (soft)limit set to $coreFileSize)"
 
 # Run isegfault and captire the exit code.
-returnCode=$(./out/isegfault || echo $?)
+returnCode=$("$OUT_DIR/isegfault" || echo $?)
 
 # Test to see if wthe expected exit code has been receieved.
 if [ $returnCode == 139 ]
