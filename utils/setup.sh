@@ -20,7 +20,7 @@ echo "OUT_DIR set to: $OUT_DIR"
 # Create the output directory if it doesn't already exist.
 if [ ! -d "$OUT_DIR" ] 
 then 
-	mkdir "$OUT_DIR" 
+	sudo mkdir "$OUT_DIR" 
 fi
 
 # Create directory for core dumps to be written to.
