@@ -45,7 +45,7 @@ stages:
       - job:
         displayName: "Failing, utterly"
         steps:
-          - bash: "./tests/isegfault-test.sh $(Build.ArtifactStagingDirectory)"
+          - bash: "./tests/isegfault-test.sh $(Build.ArtifactStagingDirectory)/drop"
             displayName: "Segmentation fault test"
           - bash: "ls -l /tmp/core"
             displayName: "Contents of /tmp/core"
