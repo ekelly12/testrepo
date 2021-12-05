@@ -18,14 +18,6 @@ stages:
             displayName: "Setting up system-wide environment"
           - bash: "sudo sysctl -a | grep kernel.core_pattern"
             displayName: "Displaying kernel pattern"
-
-  - stage: BuildUbuntu
-    dependsOn: BuildENV
-    displayName: "Building then testing the build"
-    jobs:
-      - job: signalsBuild
-        displayName: "iSegfault build"
-        steps:
           - bash: "./isegfault/build.sh . $(Build.BinariesDirectory)"
             displayName: "Building"
           - bash: "ls -la $(Build.BinariesDirectory)"
