@@ -16,8 +16,6 @@ stages:
           - bash: ". utils/setup.sh"
             name: printvar
             displayName: "Setting up system-wide environment"
-          - bash: "echo $(BUILD_ROOT)"
-            displayName: "Build root"
           - bash: "sudo sysctl -a | grep kernel.core_pattern"
             displayName: "Displaying kernel pattern"
 
