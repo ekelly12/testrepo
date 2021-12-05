@@ -7,7 +7,7 @@ coreFileSize=$(ulimit -Sc)
 echo "Core dump file size (soft)limit set to $coreFileSize)"
 
 # Run isegfault and captire the exit code.
-returnCode=$($BUILD_ROOT/out/isegfault || echo $?)
+returnCode=$(./out/isegfault || echo $?)
 
 # Test to see if wthe expected exit code has been receieved.
 if [ $returnCode == 139 ]
