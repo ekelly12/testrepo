@@ -28,6 +28,15 @@ stages:
         steps:
           - bash: "./isegfault/build.sh . $(Build.BinariesDirectory)"
             displayName: "Building"
+          - task: CopyFiles@2
+            inputs:
+            sourceFolder: '$(Build.BinariesDirectory)'
+            contents: 'isegfault'
+            targetFolder: '$(Build.ArtifactStagingDirectory)'
+          - task: PublishBuildArtifacts@1
+            inputs:
+            pathToPublish: '$(Build.ArtifactStagingDirectory)'
+            artifactName: drop
 
   - stage:
     dependsOn: BuildUbuntu
@@ -36,7 +45,7 @@ stages:
       - job:
         displayName: "Failing, utterly"
         steps:
-          - bash: "./tests/isegfault-test.sh $(Build.BinariesDirectory)"
+          - bash: "./tests/isegfault-test.sh $(Build.ArtifactStagingDirectory)"
             displayName: "Segmentation fault test"
           - bash: "ls -l /tmp/core"
             displayName: "Contents of /tmp/core"
