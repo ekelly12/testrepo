@@ -26,7 +26,7 @@ if [ $returnCode ] && [ "$returnCode" -eq "$expectedExitCode" ]
 then
 	echo "isegfault expectedly returned an exit code of $returnCode."
 else
-	echo "isegfault returned an exist code other than $expectedExitCode."
+	echo "isegfault returned an exit code other than $expectedExitCode."
 	echo "exit code returned: '$returnCode'"
 	exit 1
 fi

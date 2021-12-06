@@ -177,6 +177,7 @@ def die():
     exit(1);
 
 def main():
+    global core_target_dir, exec_path_file, process_filename
     # Command line argument handling.
     if (not len(sys.argv) > 3):
         out_add("Not enough arguments")
@@ -189,6 +190,7 @@ def main():
     if (run_mode == 'reader'):
         core_target_dir     = sys.argv[2]
         exec_path_file      = sys.argv[3]
+        
         build_executable_list(exec_path_file)
         run_read(core_target_dir)
     elif (run_mode == 'receiver'):

@@ -27,7 +27,7 @@ stages:
           - bash: "./tests/isegfault-test.sh $(Build.BinariesDirectory)"
             displayName: "Segmentation fault test"
           - bash: "./tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
-            displayName: "Uncatchable exception test"
+            displayName: "Uncaught exception test"
           - task: PythonScript@0
             displayName: 'Run error handler test'
             inputs:
@@ -37,4 +37,5 @@ stages:
                 reader 
                 /tmp/core 
                 utils/exec_paths.txt
+                test
     
