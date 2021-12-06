@@ -111,7 +111,7 @@ def scan_path_for_execs(path):
         full_file_path = path + '/' + file
         is_executable = os.access(full_file_path, os.X_OK)
         if (bool(is_executable) == True):
-            out_add("Found an execuatble w/debug info at: " + full_file_path)
+            out_add("Found an execuatble at: " + full_file_path)
             exec_list_dict[file] = full_file_path
     out_add("Done.")
 
@@ -136,6 +136,7 @@ def core_file_handler(core_file_path):
             for exec_key in core_map[core_key][inspection_key]:
                 out_add(tab_indent + exec_key)
             out_add("Backtrace and registers")
+            print(gdb_output_map)
             out_add(gdb_output_map[inspection_key])
             out_add(line_separator)
 
@@ -146,6 +147,7 @@ def gdb_gen_construct(core_file_path,path_to_exec,path_to_instructions):
     p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=DEVNULL, close_fds=True)
     output = p.stdout.read()
     output_utf8 = output.decode('utf-8')
+    print(output_utf8)
     # Create the core map key, if it doesn't already exist.
     if (not core_file_path in core_map):
         core_map[core_file_path] = {}
