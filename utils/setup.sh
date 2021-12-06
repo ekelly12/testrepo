@@ -39,14 +39,24 @@ else
 	./utils/cleanse-core-dump-files.sh $coreDumpDir
 fi
 
+# GDB *should definietly* be installed
+gdbInstalled=$(which gdb)
+if [ -v $gdbInstalled ]
+then
+	echo "gdb is not installed."
+	echo "Attempting to install it, now."
+	sudo apt install gdb
+else
+	echo "dbg is already installed."
+fi
+
+# Did the install attempt work?
+gdbInstalled=$(which gdb)
+if [ -v $gdbInstalled ]
+then
+	echo "Failed to install gdb."
+fi
+
 # Set the rules for the core dump.
 #sudo sysctl -w kernel.core_pattern="|/tmp/core-handler.py $coreDumpDir %e-%p-%s-%u.core"
-#sudo sysctl -w kernel.core_pattern="|$BUILD_ROOT/utils/core-handler.py $coreDumpDir %e-%p-%s-%u.core"
 sudo sysctl -w kernel.core_pattern="/tmp/core/%e-%p-%s-%u.core"
-#sudo sysctl -w kernel.core_pattern="|/tmp/shelly.sh"
-#sudo sysctl -w kernel.core_pattern="|$BUILD_ROOT/some-perl.pl"
-#sudo sysctl -w kernel.core_pipe_limit=0
-
-# Set ADO pipeline vars.
-#echo "##vso[task.setvariable variable=BUILD_ROOT]$BUILD_ROOT"
-#echo "##vso[task.setvariable variable=BUILD_OUT_DIR]$BUILD_OUT_DIR"
