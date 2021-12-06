@@ -35,6 +35,5 @@ stages:
               arguments: >- 
                 reader 
                 /tmp/core 
-                tests 
                 utils/exec_paths.txt
     

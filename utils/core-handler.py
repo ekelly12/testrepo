@@ -166,24 +166,24 @@ def die():
 
 def main():
     # Command line argument handling.
-    if (not (len(sys.argv)-1) == 4):
+    if (not len(sys.argv) > 3):
         out_add("Not enough arguments")
         out_print()
         exit(1)
     run_mode            = sys.argv[1]
-    core_target_dir     = sys.argv[2]
-    process_filename    = sys.argv[3]
-    exec_path_file      = sys.argv[4]
     exit_code           = 0;
-    # Using exec_path_file, discover executables with debug symbols unstripped
-    # to eventually map to core dumps.
-    build_executable_list(exec_path_file)
     # This script *should* be able to run in these modes:
     # 1) "reader" - Will scan core_target_dir for handled core dumps.
     # 2) "receiver" -Will receieve core dumps, via STDIN, from the kernel.
     if (run_mode == 'reader'):
+        core_target_dir     = sys.argv[2]
+        exec_path_file      = sys.argv[3]
+        build_executable_list(exec_path_file)
         run_read(core_target_dir)
     elif (run_mode == 'receiver'):
+        core_target_dir     = sys.argv[2]
+        process_filename    = sys.argv[3]
+        exec_path_file      = sys.argv[4]
         run_stdin()
     else:
         out_add("Didn't receive a correct run mode. Exiting.")
