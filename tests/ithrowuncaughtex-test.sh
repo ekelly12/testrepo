@@ -7,7 +7,7 @@ then
 fi
 
 programName=ithrowuncaughtex
-expectedExitCode=126
+expectedExitCode=">0"
 
 OUT_DIR=$1
 echo "OUT_DIR set to: $OUT_DIR"
@@ -19,12 +19,14 @@ coreFileSize=$(ulimit -Sc)
 echo "Core dump file size (soft)limit set to ($coreFileSize)"
 
 # Run the program and captire the exit code.
-returnCode=$("$OUT_DIR/$programName" || echo $?)
+progPath="$OUT_DIR/$programName"
+echo "Running $progPath"
+returnCode=$($progPath || echo $?)
 
 # Test to see if wthe expected exit code has been receieved.
-if [ $returnCode ] && [ "$returnCode" < "$expectedExitCode" ]
+if [ $returnCode ]
 then
-	echo "$programName expectedly returned an exit code of $returnCode."
+	echo "$programName expectedly returned an exit code of $returnCode(>0)."
 else
 	echo "$programName returned an exit code other than $expectedExitCode."
 	echo "exit code returned: '$returnCode'"
