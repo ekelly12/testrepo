@@ -27,6 +27,7 @@ stages:
           - bash: "ls -l /tmp/core"
             displayName: "Contents of /tmp/core"
           - bash: "echo $(Build.BinariesDirectory) > utils/exec_paths.txt"
+            displayName: "Writing the exec path file"
           - bash: "sudo apt install gdb"
             displayName: "Installing GDB"
           - bash: "sudo which gdb"
