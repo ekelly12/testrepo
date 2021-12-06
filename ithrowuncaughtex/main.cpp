@@ -2,15 +2,8 @@
 #include <exception>
 using namespace std;
 
-int main () {
-  try
-  {
-    int* myarray = nullptr;
-	*myarray = 4;
-  }
-  catch (exception& e)
-  {
-    cout << "Standard exception: " << e.what() << endl;
-  }
-  return 0;
+int main () 
+{
+	throw std::runtime_error("error");
+	return 0;
 }
