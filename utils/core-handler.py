@@ -63,7 +63,6 @@ def read_dir(path):
     for file in files:
         if (file.startswith('.')):
             continue
-        out_add("Found: " + file)
         files_out.append(file)
     return files_out
 
