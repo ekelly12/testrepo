@@ -27,6 +27,7 @@ stages:
           - bash: "ls -l /tmp/core"
             displayName: "Contents of /tmp/core"
           - bash: "echo $(Build.BinariesDirectory) > utils/exec_paths.txt"
+          - bash: "which gdb"
           - task: PythonScript@0
             displayName: 'Run error handler'
             inputs:
