@@ -12,6 +12,7 @@ import hashlib
 print_to_term   = False
 print_to_stdout = True
 print_immediate = True
+test_flag       = False
 
 # Path to the shell script that generates gdb output.
 gdb_gen_file_path          = "utils/gdb-dump.sh"
@@ -70,7 +71,7 @@ def read_dir(path):
     return files_out
 
 def run_read(core_dir):
-    global exit_code
+    global exit_code, test_flag
     files = read_dir(core_dir)
     if (bool(files) == False):
         out_add("Found no files")
@@ -80,8 +81,10 @@ def run_read(core_dir):
         if (bool(file.endswith('.gz')) == True):
             continue
         # Reset the exit code here.
-        # Always return an exit code greater than 1 if any core files are handled.
-        exit_code = 1
+        # Always return an exit code greater than 1 if any core files are handled,
+        # unless the test_flag bool is set to True
+        if (bool(test_flag) == False):
+            exit_code = 1
         full_path = core_dir + '/' + file
         # Determine if these files are handled by this script.
         name_segments = file.split('-');
@@ -177,7 +180,7 @@ def die():
     exit(1);
 
 def main():
-    global core_target_dir, exec_path_file, process_filename
+    global core_target_dir, exec_path_file, process_filename, test_flag, exit_code
     # Command line argument handling.
     if (not len(sys.argv) > 3):
         out_add("Not enough arguments")
@@ -186,11 +189,14 @@ def main():
     run_mode = sys.argv[1]
     # This script *should* be able to run in these modes:
     # 1) "reader" - Will scan core_target_dir for handled core dumps.
-    # 2) "receiver" -Will receieve core dumps, via STDIN, from the kernel.
+    # 2) "receiver" - Will receieve core dumps, via STDIN, from the kernel.
+    # 3) "test" - Will cause this script to set test_flag to True. Then run as "reader".
+    if (run_mode == 'test'):
+        test_flag           = True
+        run_mode            = "reader"
     if (run_mode == 'reader'):
         core_target_dir     = sys.argv[2]
         exec_path_file      = sys.argv[3]
-        
         build_executable_list(exec_path_file)
         run_read(core_target_dir)
     elif (run_mode == 'receiver'):

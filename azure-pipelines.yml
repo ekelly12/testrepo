@@ -34,8 +34,6 @@ stages:
               scriptSource: 'filePath'
               scriptPath: ./utils/core-handler.py
               arguments: >- 
-                reader 
+                test 
                 /tmp/core 
                 utils/exec_paths.txt
-                test
-    
