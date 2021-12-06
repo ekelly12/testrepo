@@ -16,7 +16,7 @@ echo "OUT_DIR set to: $OUT_DIR"
 ulimit -Sc unlimited
 
 coreFileSize=$(ulimit -Sc)
-echo "Core dump file size (soft)limit set to $coreFileSize)"
+echo "Core dump file size (soft)limit set to ($coreFileSize)"
 
 # Run the program and captire the exit code.
 returnCode=$("$OUT_DIR/$programName" || echo $?)
@@ -24,7 +24,7 @@ returnCode=$("$OUT_DIR/$programName" || echo $?)
 # Test to see if wthe expected exit code has been receieved.
 if [ $returnCode ] && [ "$returnCode" -eq "$expectedExitCode" ]
 then
-	echo "$programName expectedly returned an exit code of $expectedExitCode."
+	echo "$programName expectedly returned an exit code of $returnCode."
 else
 	echo "$programName returned an exit code other than $expectedExitCode."
 	echo "exit code returned: '$returnCode'"

@@ -24,8 +24,8 @@ stages:
             displayName: "Writing the exec path file"
           - bash: "./tests/isegfault-test.sh $(Build.BinariesDirectory)"
             displayName: "Segmentation fault test"
-          - bash: "./tests/ithowuncaughtex-test.sh $(Build.BinariesDirectory)"
-            displayName: "Uncatchable exception text"
+          - bash: "./tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
+            displayName: "Uncatchable exception test"
           - task: PythonScript@0
             displayName: 'Run error handler test'
             inputs:

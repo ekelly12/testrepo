@@ -6,6 +6,9 @@ then
     exit 1
 fi
 
+programName=isegfault
+expectedExitCode=139
+
 OUT_DIR=$1
 echo "OUT_DIR set to: $OUT_DIR"
 
@@ -13,17 +16,17 @@ echo "OUT_DIR set to: $OUT_DIR"
 ulimit -Sc unlimited
 
 coreFileSize=$(ulimit -Sc)
-echo "Core dump file size (soft)limit set to $coreFileSize)"
+echo "Core dump file size (soft)limit set to ($coreFileSize)"
 
 # Run isegfault and captire the exit code.
 returnCode=$("$OUT_DIR/isegfault" || echo $?)
 
 # Test to see if wthe expected exit code has been receieved.
-if [ $returnCode == 139 ]
+if [ $returnCode ] && [ "$returnCode" -eq "$expectedExitCode" ]
 then
-	echo "isegfault expectedly returned an exit code of 139."
+	echo "isegfault expectedly returned an exit code of $returnCode."
 else
-	echo "isegfault returned an exist code other than 139."
+	echo "isegfault returned an exist code other than $expectedExitCode."
 	echo "exit code returned: '$returnCode'"
 	exit 1
 fi
