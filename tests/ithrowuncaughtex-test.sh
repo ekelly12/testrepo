@@ -22,7 +22,7 @@ echo "Core dump file size (soft)limit set to ($coreFileSize)"
 returnCode=$("$OUT_DIR/$programName" || echo $?)
 
 # Test to see if wthe expected exit code has been receieved.
-if [ $returnCode ] && [ "$returnCode" -eq "$expectedExitCode" ]
+if [ $returnCode ] && [ "$returnCode" < "$expectedExitCode" ]
 then
 	echo "$programName expectedly returned an exit code of $returnCode."
 else
