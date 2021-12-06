@@ -18,6 +18,8 @@ stages:
             displayName: "Setting up system-wide environment"
           - bash: "./isegfault/build.sh . $(Build.BinariesDirectory)"
             displayName: "Building"
+          - bash: "./ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)"
+            displayName: "Building"
           - bash: "ls -la $(Build.BinariesDirectory)"
             displayName: "Dump of build bin folder"
           - bash: "echo $(Build.BinariesDirectory) > utils/exec_paths.txt"
