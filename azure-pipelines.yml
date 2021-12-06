@@ -20,12 +20,12 @@ stages:
             displayName: "Building"
           - bash: "ls -la $(Build.BinariesDirectory)"
             displayName: "Dump of build bin folder"
-          - bash: "./tests/isegfault-test.sh $(Build.BinariesDirectory)"
-            displayName: "Segmentation fault test"
-          #- bash: "ls -l /tmp/core"
-            #displayName: "Contents of /tmp/core"
           - bash: "echo $(Build.BinariesDirectory) > utils/exec_paths.txt"
             displayName: "Writing the exec path file"
+          - bash: "./tests/isegfault-test.sh $(Build.BinariesDirectory)"
+            displayName: "Segmentation fault test"
+          - bash: "./tests/ithowuncaughtex-test.sh $(Build.BinariesDirectory)"
+            displayName: "Uncatchable exception text"
           - task: PythonScript@0
             displayName: 'Run error handler test'
             inputs:

@@ -27,8 +27,11 @@ core_map        = {}
 gdb_output_map  = {}
 
 # Formatting helpers.
-line_separator = "\n===================\n"
-tab_indent     = "\t ===> "
+line_separator  = "\n===================\n"
+tab_indent      = "\t ===> "
+
+# Script exit code.
+exit_code       = 0
 
 def out_add(message):
     if (bool(print_immediate) == True):
@@ -67,6 +70,7 @@ def read_dir(path):
     return files_out
 
 def run_read(core_dir):
+    global exit_code
     files = read_dir(core_dir)
     if (bool(files) == False):
         out_add("Found no files")
@@ -75,6 +79,9 @@ def run_read(core_dir):
     for file in files:
         if (bool(file.endswith('.gz')) == True):
             continue
+        # Reset the exit code here.
+        # Always return an exit code greater than 1 if any core files are handled.
+        exit_code = 1
         full_path = core_dir + '/' + file
         # Determine if these files are handled by this script.
         name_segments = file.split('-');
@@ -110,7 +117,7 @@ def scan_path_for_execs(path):
         full_file_path = path + '/' + file
         is_executable = os.access(full_file_path, os.X_OK)
         if (bool(is_executable) == True):
-            out_add("Found an execuatble at: " + full_file_path)
+            out_add("Found an executable at: " + full_file_path)
             exec_list_dict[file] = full_file_path
     out_add("Done.")
 
@@ -118,6 +125,7 @@ def scan_path_for_execs(path):
 # Loops through all discovered executables for unique gdb output
 # Then groups the executables by it.
 def core_file_handler(core_file_path):
+    global core_map
     out_add("Dumping the core file: " + core_file_path)
     if (len(exec_list_dict) < 1):
         out_add("The executable list is empty. Will simply generate the gdb bt without debug symbols.")
@@ -137,6 +145,7 @@ def core_file_handler(core_file_path):
             out_add("Backtrace and registers")
             out_add(gdb_output_map[inspection_key])
             out_add(line_separator)
+    core_map = {}
 
 def gdb_gen_construct(core_file_path,path_to_exec,path_to_instructions):
     cmd_params = (gdb_gen_file_path,path_to_exec,path_to_instructions,core_file_path)
@@ -173,8 +182,7 @@ def main():
         out_add("Not enough arguments")
         out_print()
         exit(1)
-    run_mode            = sys.argv[1]
-    exit_code           = 0;
+    run_mode = sys.argv[1]
     # This script *should* be able to run in these modes:
     # 1) "reader" - Will scan core_target_dir for handled core dumps.
     # 2) "receiver" -Will receieve core dumps, via STDIN, from the kernel.
@@ -192,6 +200,6 @@ def main():
         out_add("Didn't receive a correct run mode. Exiting.")
         exit_code = 1
     out_print()
-    exit(exit_code)
 
 main()
+exit(exit_code)
