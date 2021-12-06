@@ -28,9 +28,9 @@ stages:
             displayName: "Contents of /tmp/core"
           - bash: "echo $(Build.BinariesDirectory) > utils/exec_paths.txt"
           - bash: "sudo apt install gdb"
-            displayName: "This is dumb"
+            displayName: "Installing GDB"
           - bash: "sudo which gdb"
-            displayName: "any gdb?"
+            displayName: "Has GDB been installed?"
           - task: PythonScript@0
             displayName: 'Run error handler'
             inputs:
