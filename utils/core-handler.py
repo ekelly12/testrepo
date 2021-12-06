@@ -147,7 +147,9 @@ def gdb_gen_construct(core_file_path,path_to_exec,path_to_instructions):
     output = p.stdout.read()
     res = p.communicate()
     if (p.returncode != 0):
-        out_add("The command failed.")
+        out_add("The command failed with the error code: " + p.returncode)
+        for line in res[0].decode(encoding='utf-8').split('\n'):
+          out_add(line)
         die()
     output_utf8 = output.decode('utf-8')
     # Create the core map key, if it doesn't already exist.
