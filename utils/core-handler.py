@@ -147,7 +147,7 @@ def gdb_gen_construct(core_file_path,path_to_exec,path_to_instructions):
     p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=DEVNULL, close_fds=True)
     output = p.stdout.read()
     output_utf8 = output.decode('utf-8')
-    print(output_utf8)
+    print(output)
     # Create the core map key, if it doesn't already exist.
     if (not core_file_path in core_map):
         core_map[core_file_path] = {}
