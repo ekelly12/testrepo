@@ -16,24 +16,18 @@ stages:
           - bash: "./utils/setup.sh . $(Build.BinariesDirectory)"
             name: printvar
             displayName: "Setting up system-wide environment"
-          - bash: "sudo sysctl -a | grep kernel.core_pattern"
-            displayName: "Displaying kernel pattern"
           - bash: "./isegfault/build.sh . $(Build.BinariesDirectory)"
             displayName: "Building"
           - bash: "ls -la $(Build.BinariesDirectory)"
             displayName: "Dump of build bin folder"
           - bash: "./tests/isegfault-test.sh $(Build.BinariesDirectory)"
             displayName: "Segmentation fault test"
-          - bash: "ls -l /tmp/core"
-            displayName: "Contents of /tmp/core"
+          #- bash: "ls -l /tmp/core"
+            #displayName: "Contents of /tmp/core"
           - bash: "echo $(Build.BinariesDirectory) > utils/exec_paths.txt"
             displayName: "Writing the exec path file"
-          #- bash: "sudo apt install gdb"
-            #displayName: "Installing GDB"
-          #- bash: "sudo which gdb"
-            #displayName: "Has GDB been installed?"
           - task: PythonScript@0
-            displayName: 'Run error handler'
+            displayName: 'Run error handler test'
             inputs:
               scriptSource: 'filePath'
               scriptPath: ./utils/core-handler.py
