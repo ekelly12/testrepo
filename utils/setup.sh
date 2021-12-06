@@ -40,7 +40,12 @@ else
 fi
 
 # Set the rules for the core dump.
-sudo sysctl -w kernel.core_pattern=/tmp/core/%e-%p-%s-%u.core
+#sudo sysctl -w kernel.core_pattern="|/tmp/core-handler.py $coreDumpDir %e-%p-%s-%u.core"
+#sudo sysctl -w kernel.core_pattern="|$BUILD_ROOT/utils/core-handler.py $coreDumpDir %e-%p-%s-%u.core"
+sudo sysctl -w kernel.core_pattern="/tmp/core/%e-%p-%s-%u.core"
+#sudo sysctl -w kernel.core_pattern="|/tmp/shelly.sh"
+#sudo sysctl -w kernel.core_pattern="|$BUILD_ROOT/some-perl.pl"
+#sudo sysctl -w kernel.core_pipe_limit=0
 
 # Set ADO pipeline vars.
 #echo "##vso[task.setvariable variable=BUILD_ROOT]$BUILD_ROOT"

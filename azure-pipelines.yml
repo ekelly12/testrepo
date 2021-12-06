@@ -7,7 +7,7 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: BuildENV
+  - stage: BuildAndTest
     displayName: "Build Enivornment (Ubuntu)"
     jobs:
       - job: CoreConfig
@@ -26,3 +26,15 @@ stages:
             displayName: "Segmentation fault test"
           - bash: "ls -l /tmp/core"
             displayName: "Contents of /tmp/core"
+          - bash: "echo $(Build.BinariesDirectory) > utils/exec_paths.txt"
+          - task: PythonScript@0
+            displayName: 'Run error handler'
+            inputs:
+              scriptSource: 'filePath'
+              scriptPath: ./utils/core-handler.py
+              arguments: >- 
+                reader 
+                /tmp/core 
+                tests 
+                utils/exec_paths.txt
+    
