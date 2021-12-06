@@ -136,7 +136,6 @@ def core_file_handler(core_file_path):
             for exec_key in core_map[core_key][inspection_key]:
                 out_add(tab_indent + exec_key)
             out_add("Backtrace and registers")
-            print(gdb_output_map)
             out_add(gdb_output_map[inspection_key])
             out_add(line_separator)
 
@@ -144,10 +143,13 @@ def gdb_gen_construct(core_file_path,path_to_exec,path_to_instructions):
     cmd_params = (gdb_gen_file_path,path_to_exec,path_to_instructions,core_file_path)
     command = ' '.join(cmd_params)
     out_add("Running command: " + command)
-    p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=DEVNULL, close_fds=True)
+    p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
     output = p.stdout.read()
+    res = p.communicate()
+    if (p.returncode != 0):
+        out_add("The command failed.")
+        die()
     output_utf8 = output.decode('utf-8')
-    print(output)
     # Create the core map key, if it doesn't already exist.
     if (not core_file_path in core_map):
         core_map[core_file_path] = {}
