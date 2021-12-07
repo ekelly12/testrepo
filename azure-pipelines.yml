@@ -60,6 +60,6 @@ stages:
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
           - bash: "$(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)"
             displayName: "Building failure exec(2)"
-          #- bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
-            #displayName: "Uncaught exception test"
+          - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
+            displayName: "Uncaught exception test"
           - template: templates/CaptureCriticalRun.yml
