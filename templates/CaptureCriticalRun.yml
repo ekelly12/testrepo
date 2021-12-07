@@ -1,6 +1,6 @@
 steps:
   - task: PythonScript@0
-    displayName: 'Run error handler'
+    displayName: 'Running core dump handler'
     inputs:
       scriptSource: 'filePath'
       scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
