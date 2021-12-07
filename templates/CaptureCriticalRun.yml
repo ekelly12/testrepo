@@ -1,20 +1,20 @@
 steps:
-  - task: PythonScript@0
-    displayName: 'Running core dump handler'
-    inputs:
-      scriptSource: 'filePath'
-      scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
-      arguments: >-
-        reader
-        $(CoreDest)
-        $(ExecDirPathFile)
-        $(Build.SourcesDirectory)
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: $(CoreDest)
-      Contents: '*.zip'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish Artifact: drop'
-    inputs:
-      PathtoPublish: $(Build.ArtifactStagingDirectory)
+- task: PythonScript@0
+  displayName: 'Running core dump handler'
+  inputs:
+    scriptSource: 'filePath'
+    scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
+    arguments: >-
+      reader
+      $(CoreDest)
+      $(ExecDirPathFile)
+      $(Build.SourcesDirectory)
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: $(CoreDest)
+    Contents: '*.zip'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: $(Build.ArtifactStagingDirectory)
