@@ -14,7 +14,7 @@ steps:
   inputs:
     SourceFolder: $(CoreDest)
     Contents: '*.zip'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   inputs:
