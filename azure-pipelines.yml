@@ -18,7 +18,7 @@ stages:
           - name: CORE_DEST
             value: /tmp/core
         steps:
-          - bash: "$(Build.SourcesDirectory)/utils/setup.sh . $(Build.BinariesDirectory) $(CORE_DEST)"
+          - bash: "$(Build.SourcesDirectory)/utils/setup.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory) $(CORE_DEST)"
             name: printvar
             displayName: "Setting up system-wide environment"
           - bash: "$(Build.SourcesDirectory)/isegfault/build.sh . $(Build.BinariesDirectory)"
@@ -39,7 +39,7 @@ stages:
               scriptSource: 'filePath'
               scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
               arguments: >- 
-                $(Build.BinariesDirectory)
+                test
                 $(CORE_DEST)
                 $(CORE_EXEC_PATH_FILE)
                 $(Build.SourcesDirectory)
