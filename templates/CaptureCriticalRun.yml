@@ -6,7 +6,7 @@ parameters:
 
 steps:
   - task: PythonScript@0
-	displayName: 'Run error handler'
+    displayName: 'Run error handler'
 	inputs:
 	  scriptSource: 'filePath'
 	  scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
