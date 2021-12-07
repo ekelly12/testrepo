@@ -7,5 +7,5 @@ parameters:
 steps:
   - bash: echo "##vso[task.setvariable variable=CoreDest]${{ parameters.CoreDest }}"
   - bash: echo "##vso[task.setvariable variable=ExecDirPathFile]${{ parameters.ExecDirPathFile }}"
-  - bash: "$(Build.SourcesDirectory)/utils/setup.sh $(Build.SourcesDirectory) ${{ parameters.CoreDest }})"
+  - bash: "$(Build.SourcesDirectory)/utils/setup.sh $(Build.SourcesDirectory) ${{ parameters.CoreDest }}"
     displayName: "Preparing Termination Captures"
