@@ -48,17 +48,12 @@ stages:
     jobs:
       - job: ReRun
         displayName: "Re-run core handler"
-        variables:
-          - name: CORE_EXEC_PATH_FILE
-            value: "$(Build.StagingDirectory)/core_handler_exec_paths.txt"
-          - name: CORE_DEST
-            value: /tmp/core
         steps:
-          - bash: "echo $(Build.BinariesDirectory) >> $(CORE_EXEC_PATH_FILE)"
+          - bash: "echo $(Build.BinariesDirectory) > $(Build.StagingDirectory)/core_handler_exec_paths.txt"
             displayName: "Writing the exec path file"
           - template: templates/CaptureCriticalPrepare.yml
             parameters:
-              CoreDest: $(CORE_DEST)
+              CoreDest: /tmp/core
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
           - bash: "$(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)"
             displayName: "Building failure exec(2)"
