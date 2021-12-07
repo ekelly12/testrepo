@@ -57,7 +57,6 @@ stages:
           - bash: "echo $(Build.BinariesDirectory) >> $(CORE_EXEC_PATH_FILE)"
             displayName: "Writing the exec path file"
           - template: templates/CaptureCriticalPrepare.yml
-            name: CaptureCritPrep
             parameters:
               CoreDest: $(CORE_DEST)
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
