@@ -139,6 +139,7 @@ def core_file_handler(core_file_path):
         out_add("The executable list is empty. Will simply generate the gdb bt without debug symbols.")
         gdb_gen_construct(core_file_path,'',gdb_instructions_file_path)
         return
+    out_add("Querying executables for debug symbols")
     for exec_path in exec_list_dict.values():
         gdb_gen_construct(core_file_path,exec_path,gdb_instructions_file_path)
     # Print out the results.

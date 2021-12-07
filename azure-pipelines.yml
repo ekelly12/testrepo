@@ -38,8 +38,30 @@ stages:
             inputs:
               scriptSource: 'filePath'
               scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
-              arguments: >- 
+              arguments: >-
                 test
+                $(CORE_DEST)
+                $(CORE_EXEC_PATH_FILE)
+                $(Build.SourcesDirectory)
+
+  - stage: Testy
+    displayName: "A test to see if what's built can be used within a separate stage"
+    jobs:
+      - job: ReRun
+        displayName: "Re-run core handler"
+        variables:
+          - name: CORE_EXEC_PATH_FILE
+            value: "$(Build.StagingDirectory)/core_handler_exec_paths.txt"
+          - name: CORE_DEST
+            value: /tmp/core
+        steps:
+          - task: PythonScript@0
+            displayName: 'Run error handler'
+            inputs:
+              scriptSource: 'filePath'
+              scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
+              arguments: >-
+                reader
                 $(CORE_DEST)
                 $(CORE_EXEC_PATH_FILE)
                 $(Build.SourcesDirectory)
