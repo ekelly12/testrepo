@@ -15,6 +15,10 @@ then
 fi
 OUT_DIR=$2
 echo "OUT_DIR set to: $OUT_DIR"
+if [ ! -d $OUT_DIR ]
+then
+	mkdir $OUT_DIR
+fi
 
 COMPILE_STR="g++ -g -I$BUILD_ROOT/isegfault -o \"$OUT_DIR/isegfault\" \"$BUILD_ROOT/isegfault/isegfault.cpp\""
 echo $COMPILE_STR

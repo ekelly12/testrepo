@@ -1,0 +1,7 @@
+parameters:
+  - name: CoreDest
+    type: string
+
+steps:
+  - bash: "$(Build.SourcesDirectory)/utils/setup.sh $(Build.SourcesDirectory) ${{ parameters.CoreDest }})"
+	displayName: "Preparing Termination Captures"

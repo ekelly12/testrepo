@@ -1,0 +1,17 @@
+parameters:
+  - name: ExecDirPathFile
+    type: string
+  - name: CoreDest
+    type: string
+
+steps:
+  - task: PythonScript@0
+	displayName: 'Run error handler'
+	inputs:
+	  scriptSource: 'filePath'
+	  scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
+	  arguments: >-
+		reader
+		${{ parameters.CoreDest }}
+		${{ parameters.ExecDirPathFile }}
+		$(Build.SourcesDirectory)

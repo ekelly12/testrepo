@@ -18,11 +18,11 @@ stages:
           - name: CORE_DEST
             value: /tmp/core
         steps:
-          - bash: "$(Build.SourcesDirectory)/utils/setup.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory) $(CORE_DEST)"
+          - bash: "$(Build.SourcesDirectory)/utils/setup.sh $(Build.SourcesDirectory) $(CORE_DEST)"
             displayName: "Setting up system-wide environment"
-          - bash: "$(Build.SourcesDirectory)/isegfault/build.sh . $(Build.BinariesDirectory)"
+          - bash: "$(Build.SourcesDirectory)/isegfault/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)"
             displayName: "Building failure exec(1)"
-          - bash: "$(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)"
+          - bash: "$(Build.SourcesDirectory)/ithrowuncaughtex/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)"
             displayName: "Building failure exec(2)"
           - bash: "ls -la $(Build.BinariesDirectory)"
             displayName: "Dump of build bin folder"
@@ -54,21 +54,11 @@ stages:
           - name: CORE_DEST
             value: /tmp/core
         steps:
-          - bash: "echo $(Build.BinariesDirectory) > $(CORE_EXEC_PATH_FILE)"
+          - bash: "echo $(Build.BinariesDirectory) >> $(CORE_EXEC_PATH_FILE)"
             displayName: "Writing the exec path file"
-          - bash: "$(Build.SourcesDirectory)/utils/setup.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory) $(CORE_DEST)"
-            displayName: "Setting up system-wide environment"
+          - template: templates/CaptureCriticalPrepare.yml
           - bash: "$(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)"
             displayName: "Building failure exec(2)"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             displayName: "Uncaught exception test"
-          - task: PythonScript@0
-            displayName: 'Run error handler'
-            inputs:
-              scriptSource: 'filePath'
-              scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
-              arguments: >-
-                reader
-                $(CORE_DEST)
-                $(CORE_EXEC_PATH_FILE)
-                $(Build.SourcesDirectory)
+          - template: templates/CaptureCriticalRun.yml

@@ -10,30 +10,14 @@ fi
 BUILD_ROOT=$1
 echo "BUILD_ROOT set to: $BUILD_ROOT"
 
-# Second parameter is output directory for the executables
-# Built for the tests of the handler.
-if [ -z $2 ]
-then
-    echo "The OUT_DIR parameter is empty"
-    exit 1
-fi
-OUT_DIR=$2
-echo "OUT_DIR set to: $OUT_DIR"
-
-# Create the output directory if it doesn't already exist.
-if [ ! -d "$OUT_DIR" ] 
-then 
-	sudo mkdir "$OUT_DIR" 
-fi
-
-# Third paramater is the target desination of the core dump files
+# Second paramater is the target desination of the core dump files
 # written by the OS.
-if [ -z $3 ]
+if [ -z $2 ]
 then
 	echo "The CORE_DEST_DIR parameter is empty."
 	exit 1
 fi
-CORE_DEST_DIR=$3
+CORE_DEST_DIR=$2
 echo "CORE_DEST_DIR set to: $CORE_DEST_DIR"
 
 # Create directory for core dumps to be written to.
