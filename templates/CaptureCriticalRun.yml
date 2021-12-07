@@ -2,10 +2,10 @@ steps:
   - task: PythonScript@0
     displayName: 'Run error handler'
     inputs:
-	  scriptSource: 'filePath'
-	  scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
-	  arguments: >-
-		reader
-		$(CoreDest)
-		$(ExecDirPathFile)
-		$(Build.SourcesDirectory)
+      scriptSource: 'filePath'
+      scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
+      arguments: >-
+        reader
+        $(CoreDest)
+        $(ExecDirPathFile)
+        $(Build.SourcesDirectory)
