@@ -14,10 +14,15 @@ print_to_stdout = True
 print_immediate = True
 test_flag       = False
 
+# Path to where all resources for this utility resides.
+# Defaulted to the cwd.
+build_path                 = '.'
 # Path to the shell script that generates gdb output.
 gdb_gen_file_path          = "utils/gdb-dump.sh"
 # Path to the dbg instructions file.
 gdb_instructions_file_path = "utils/gdb-dump-instructions.txt"
+
+# Structures used within this script.
 # Dict to house a list of executables containing debug info to query for symbols.
 exec_list_dict  = {}
 # Message output array.
@@ -151,7 +156,7 @@ def core_file_handler(core_file_path):
     core_map = {}
 
 def gdb_gen_construct(core_file_path,path_to_exec,path_to_instructions):
-    cmd_params = (gdb_gen_file_path,path_to_exec,path_to_instructions,core_file_path)
+    cmd_params = (build_path + '/' + gdb_gen_file_path,path_to_exec,path_to_instructions,core_file_path)
     command = ' '.join(cmd_params)
     out_add("Running command: " + command)
     p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
@@ -180,7 +185,7 @@ def die():
     exit(1);
 
 def main():
-    global core_target_dir, exec_path_file, process_filename, test_flag, exit_code
+    global build_path, core_target_dir, exec_path_file, process_filename, test_flag, exit_code
     # Command line argument handling.
     if (not len(sys.argv) > 3):
         out_add("Not enough arguments")
@@ -197,9 +202,14 @@ def main():
     if (run_mode == 'reader'):
         core_target_dir     = sys.argv[2]
         exec_path_file      = sys.argv[3]
+        build_path          = sys.argv[4]
         build_executable_list(exec_path_file)
         run_read(core_target_dir)
     elif (run_mode == 'receiver'):
+        # Killing this feature for now.
+        # Eventually, it or something like it may be used to display runtime crashes.
+        out_add("The feture is not yet implemented!")
+        return
         core_target_dir     = sys.argv[2]
         process_filename    = sys.argv[3]
         exec_path_file      = sys.argv[4]
