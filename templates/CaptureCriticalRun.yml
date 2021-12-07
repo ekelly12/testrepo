@@ -11,9 +11,10 @@ steps:
         $(Build.SourcesDirectory)
   - task: CopyFiles@2
     inputs:
-    sourceFolder: $(CoreDest)
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
+      SourceFolder: $(CoreDest)
+      Contents: '*.zip'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: drop'
     inputs:
-    PathtoPublish: $(Build.ArtifactStagingDirectory)
+      PathtoPublish: $(Build.ArtifactStagingDirectory)
