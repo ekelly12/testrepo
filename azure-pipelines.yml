@@ -56,8 +56,8 @@ stages:
         steps:
           - bash: "$(Build.SourcesDirectory)/utils/setup.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory) $(CORE_DEST)"
             displayName: "Setting up system-wide environment"
-          # - bash: "$(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)"
-            # displayName: "Building failure exec(2)"
+          - bash: "$(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)"
+            displayName: "Building failure exec(2)"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             displayName: "Uncaught exception test"
           - task: PythonScript@0
