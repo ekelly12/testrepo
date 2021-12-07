@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Check for required parameters.
+# First parameter, BUILD_ROOT.
 if [ -z $1 ]
 then
 	echo "The BUILD_ROOT parameter is empty"
@@ -9,6 +10,8 @@ fi
 BUILD_ROOT=$1
 echo "BUILD_ROOT set to: $BUILD_ROOT"
 
+# Second parameter is output directory for the executables
+# Built for the tests of the handler.
 if [ -z $2 ]
 then
     echo "The OUT_DIR parameter is empty"
@@ -23,11 +26,20 @@ then
 	sudo mkdir "$OUT_DIR" 
 fi
 
-# Create directory for core dumps to be written to.
-coreDumpDir=/tmp/core
-if [ ! -d $coreDumpDir ]
+# Third paramater is the target desination of the core dump files
+# written by the OS.
+if [ -z $3 ]
 then
-    mkdir $coreDumpDir
+	echo "The CORE_DEST_DIR parameter is empty."
+	exit 1
+fi
+CORE_DEST_DIR=$3
+echo "CORE_DEST_DIR set to: $CORE_DEST_DIR"
+
+# Create directory for core dumps to be written to.
+if [ ! -d $CORE_DEST_DIR ]
+then
+    mkdir $CORE_DEST_DIR
 	retCode=$?
 	if [ ! $retCode == 0 ]
 	then
@@ -36,7 +48,7 @@ then
 	fi
 else
 	echo "Cleansing core dump files."
-	./utils/cleanse-core-dump-files.sh $coreDumpDir
+	$BUILD_ROOT/utils/cleanse-core-dump-files.sh $CORE_DEST_DIR
 fi
 
 # GDB *should definietly* be installed
@@ -59,4 +71,4 @@ fi
 
 # Set the rules for the core dump.
 #sudo sysctl -w kernel.core_pattern="|/tmp/core-handler.py $coreDumpDir %e-%p-%s-%u.core"
-sudo sysctl -w kernel.core_pattern="/tmp/core/%e-%p-%s-%u.core"
+sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"

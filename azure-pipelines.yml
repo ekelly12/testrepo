@@ -12,8 +12,13 @@ stages:
     jobs:
       - job: CoreConfig
         displayName: "Configuring the system to core dump"
+        variables:
+          - name: CORE_EXEC_PATH_FILE
+            value: "$(Build.StagingDirectory)/core_handler_exec_paths.txt"
+          - name: CORE_DEST
+            value: /tmp/core
         steps:
-          - bash: "$(Build.SourcesDirectory)/utils/setup.sh . $(Build.BinariesDirectory)"
+          - bash: "$(Build.SourcesDirectory)/utils/setup.sh . $(Build.BinariesDirectory) $(CORE_DEST)"
             name: printvar
             displayName: "Setting up system-wide environment"
           - bash: "$(Build.SourcesDirectory)/isegfault/build.sh . $(Build.BinariesDirectory)"
@@ -22,7 +27,7 @@ stages:
             displayName: "Building"
           - bash: "ls -la $(Build.BinariesDirectory)"
             displayName: "Dump of build bin folder"
-          - bash: "echo $(Build.BinariesDirectory) > utils/exec_paths.txt"
+          - bash: "echo $(Build.BinariesDirectory) > $(CORE_EXEC_PATH_FILE)"
             displayName: "Writing the exec path file"
           - bash: "$(Build.SourcesDirectory)/tests/isegfault-test.sh $(Build.BinariesDirectory)"
             displayName: "Segmentation fault test"
@@ -32,8 +37,9 @@ stages:
             displayName: 'Run error handler test'
             inputs:
               scriptSource: 'filePath'
-              scriptPath: ./utils/core-handler.py
+              scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
               arguments: >- 
-                test 
-                /tmp/core 
-                utils/exec_paths.txt
+                $(Build.BinariesDirectory)
+                $(CORE_DEST)
+                $(CORE_EXEC_PATH_FILE)
+                $(Build.SourcesDirectory)
