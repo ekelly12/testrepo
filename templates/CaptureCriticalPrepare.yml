@@ -10,6 +10,5 @@ steps:
   - bash: echo "##vso[task.setvariable variable=CoreDest]${{ parameters.CoreDest }}"
   - bash: echo "##vso[task.setvariable variable=ExecDirPathFile]${{ parameters.ExecDirPathFile }}"
   - bash: echo "##vso[task.setvariable variable=ArtifactTargetFolder]${{ parameters.ArtifactTargetFolder }}"
-  - bash: ". $(Build.SourcesDirectory)/CaptureCritical/env.sh"
-  - bash: "$(Build.SourcesDirectory)/CaptureCritical/setup.sh $(Build.SourcesDirectory) ${{ parameters.CoreDest }}"
+  - bash: "$(Build.SourcesDirectory)/CaptureCritical/setup.sh $(Build.SourcesDirectory)/CaptureCritical ${{ parameters.CoreDest }}"
     displayName: "Preparing Termination Captures"
