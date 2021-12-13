@@ -72,7 +72,8 @@ stages:
                 #res = p.communicate()
                 #print(output)
                 #subprocess.call(["ulimit","-Sc unlimited"])
-                cmd = ["$(ulimit -Sc unlimited); $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
+                cmd = [". CaptureCritical/env.sh; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
+                #cmd = ["ulimit -Sc unlimited >/dev/null 2>&1; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
                 #subprocess.call(cmd)
                 proc = Popen(cmd, shell=True, stderr=subprocess.STDOUT)
                 #proc.wait()
