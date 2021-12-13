@@ -8,4 +8,4 @@ fi
 
 echo "Core dump file directory: $1"
 
-rm $1/*
+rm -f /tmp/core/*

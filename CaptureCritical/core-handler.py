@@ -16,21 +16,14 @@ test_flag       = False
 
 # Path to where all resources for this utility resides.
 # Defaulted to the cwd.
-build_path                 = '.'
+util_root                  = '.'
 # Path to the shell script that generates gdb output.
 gdb_gen_file_path          = None
 # Path to the dbg instructions file.
 gdb_instructions_file_path = None
 
-# Structures used within this script.
-# Dict to house a list of executables containing debug info to query for symbols.
-exec_list_dict  = {}
 # Message output array.
 term_output     = []
-# Core file to exec map.
-core_map        = {}
-# A map of md5 strings to the original gdb inspection content.
-gdb_output_map  = {}
 
 # Formatting helpers.
 line_separator  = "\n===================\n"
@@ -104,87 +97,17 @@ def run_stdin():
     out_add('Received core dump with the given process name: ' + process_filename)
     write_dump(core_target_dir, process_filename)
 
-def build_executable_list(exec_path_file):
-    if (not os.path.isfile(exec_path_file)):
-        out_add("The executable directory file at: " + exec_path_file + " does not exist.")
-        die()
-    out_add("Reading the file: " + exec_path_file + " for directories to scan for executables.")
-    dir_file = open(exec_path_file, "r")
-    read_line = dir_file.readline()
-    while read_line:
-        scan_path_for_execs(read_line.rstrip('\n'))
-        read_line = dir_file.readline()
-
-# This should change later.
-def scan_path_for_execs(path):
-    global exec_list_dict
-    out_add("Scanning this path for executables: " + path)
-    files = read_dir(path)
-    if (bool(files) == False):
-        return False
-    for file in files:
-        full_file_path = os.path.join(path,file)
-        # Follow subdirectories.
-        print(full_file_path)
-        if (os.path.isdir(full_file_path)):
-            scan_path_for_execs(full_file_path)
-            continue
-        #is_executable = file_is_exec(full_file_path)
-        is_executable = file_is_exec2(file)
-        print(file)
-        print(is_executable)
-        if (bool(is_executable) == True):
-            out_add("Found an executable at: " + full_file_path)
-            exec_list_dict[file] = full_file_path
-    out_add("Done.")
-
-# Returns True if the file at the given path is executable,
-def file_is_exec(path):
-    command_params = ('test -x',path,'&& echo true || echo false')
-    command = ' '.join(command_params)
-    p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-    output = p.stdout.read().decode('utf-8').strip("\n")
-    res = p.communicate()
-    if (output == "true"):
-        return True
-    return False
-
-# Returns True if the file's name includes a specific extension.
-def file_is_exec2(file_name):
-    if (file_name.endswith('.DeviceCP') or file_name.endswith('.TilceCP') or file_name.endswith('.TVP')):
-        return True
-    return False
-
 # Calls gdb to generate backtrace and register dumps, etc.
 # Loops through all discovered executables for unique gdb output
 # Then groups the executables by it.
 def core_file_handler(core_file_path):
-    global exec_list_dict, core_map
     out_add("Dumping the core file: " + core_file_path)
-    if (len(exec_list_dict) < 1):
-        out_add("The executable list is empty. Will simply generate the gdb bt without debug symbols.")
-        gdb_gen_construct(core_file_path,'',gdb_instructions_file_path)
-        return
-    out_add("Querying executables for debug symbols")
-    for exec_path in exec_list_dict.values():
-        gdb_gen_construct(core_file_path,exec_path,gdb_instructions_file_path)
-    # Print out the results.
-    # Results are grouped by the md5 hex encoded values of the gdb inspections.
-    for core_key in core_map:
-        out_add(line_separator + "Results for the core dump at: " + core_key)
-        for inspection_key in core_map[core_key]:
-            out_add("Unique result: " + inspection_key)
-            out_add("Returned by these executable files:")
-            for exec_key in core_map[core_key][inspection_key]:
-                out_add(tab_indent + exec_key)
-            out_add("Backtrace and registers")
-            out_add(gdb_output_map[inspection_key])
-            out_add(line_separator)
-    core_map = {}
+    mini_dump = gdb_gen_construct(core_file_path,gdb_instructions_file_path)
+    out_add("Backtrace and registers")
+    out_add(mini_dump)
 
-def gdb_gen_construct(core_file_path,path_to_exec,path_to_instructions):
-    global core_map
-    cmd_params = (os.path.join(build_path,gdb_gen_file_path),path_to_exec,path_to_instructions,core_file_path)
+def gdb_gen_construct(core_file_path,path_to_instructions):
+    cmd_params = (os.path.join(util_root,gdb_gen_file_path),path_to_instructions,core_file_path)
     command = ' '.join(cmd_params)
     out_add("Running command: " + command)
     p = Popen(command, shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
@@ -195,24 +118,13 @@ def gdb_gen_construct(core_file_path,path_to_exec,path_to_instructions):
         for line in res[0].decode(encoding='utf-8').split('\n'):
           out_add(line)
         die()
-    output_utf8 = output.decode('utf-8')
-    # Create the core map key, if it doesn't already exist.
-    if (not core_file_path in core_map):
-        core_map[core_file_path] = {}
-    hash_map = core_map.get(core_file_path)
-    # Create an MD5 representation of the gdb out, for matching.
-    md5 = hashlib.md5(output).hexdigest()
-    # Save the decoded output to the output dict.
-    gdb_output_map[md5] = output_utf8
-    if (not md5 in hash_map):
-        hash_map[md5] = []
-    hash_map[md5].append(path_to_exec)
+    return output.decode('utf-8')
 
 def die():
     exit(1);
 
 def main():
-    global build_path, core_target_dir, exec_path_file, process_filename, test_flag, exit_code, gdb_gen_file_path, gdb_instructions_file_path
+    global util_root, core_target_dir, process_filename, test_flag, exit_code, gdb_gen_file_path, gdb_instructions_file_path
     # Command line argument handling.
     if (not len(sys.argv) > 3):
         out_add("Not enough arguments")
@@ -228,11 +140,9 @@ def main():
         run_mode            = "reader"
     if (run_mode == 'reader'):
         core_target_dir            = sys.argv[2]
-        exec_path_file             = sys.argv[3]
-        build_path                 = sys.argv[4]
-        gdb_gen_file_path          = os.path.join(build_path,'gdb-dump.sh')
-        gdb_instructions_file_path = os.path.join(build_path,'gdb-dump-instructions.txt')
-        build_executable_list(exec_path_file)
+        util_root                  = sys.argv[3]
+        gdb_gen_file_path          = os.path.join(util_root,'gdb-dump.sh')
+        gdb_instructions_file_path = os.path.join(util_root,'gdb-dump-instructions.txt')
         run_read(core_target_dir)
     elif (run_mode == 'receiver'):
         # Killing this feature for now.
@@ -241,7 +151,6 @@ def main():
         return
         core_target_dir     = sys.argv[2]
         process_filename    = sys.argv[3]
-        exec_path_file      = sys.argv[4]
         run_stdin()
     else:
         out_add("Didn't receive a correct run mode. Exiting.")

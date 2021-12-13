@@ -32,7 +32,7 @@ then
 	fi
 else
 	echo "Cleansing core dump files."
-	$BUILD_ROOT/utils/cleanse-core-dump-files.sh $CORE_DEST_DIR
+	$BUILD_ROOT/cleanse-core-dump-files.sh $CORE_DEST_DIR
 fi
 
 # GDB *should definietly* be installed
