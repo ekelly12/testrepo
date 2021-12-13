@@ -54,9 +54,8 @@ stages:
           - task: CmdLine@2
             inputs:
               script: |
-                sudo su
-                echo "*       soft    core    unlimited" >> /etc/security/limits.conf
-                echo "*       hard    core    unlimited" >> /etc/security/limits.conf
+                sudo echo "*       soft    core    unlimited" >> /etc/security/limits.conf
+                sudo echo "*       hard    core    unlimited" >> /etc/security/limits.conf
           - bash: "echo $(Build.BinariesDirectory) > $(CORE_EXEC_PATH_FILE)"
             displayName: "Writing the exec path file"
           - template: templates/CaptureCriticalPrepare.yml
