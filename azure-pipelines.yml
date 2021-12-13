@@ -58,10 +58,11 @@ stages:
               CoreDest: /tmp/core
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
               ArtifactTargetFolder: $(Build.ArtifactStagingDirectory)
-          - task: Bash@3
+          - task: CmdLine@2
             inputs:
-              targetType: 'inline'
-              script: echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc
+              script: |
+               ulimit -Sc unlimited
+               echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc
           - task: PythonScript@0
             inputs:
               scriptSource: 'inline'
