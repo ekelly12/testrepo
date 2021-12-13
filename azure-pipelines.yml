@@ -78,7 +78,7 @@ stages:
                 res = p.communicate()
                 print(output)
                 cmd = "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
-                proc = Popen(cmd, cwd=testdir, env=testenv, stderr=subprocess.STDOUT)
+                proc = Popen(cmd, stderr=subprocess.STDOUT)
                 proc.wait()
                 rc = proc.returncode
           # - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
