@@ -8,7 +8,6 @@ steps:
     arguments: >-
       reader
       $(CoreDest)
-      $(ExecDirPathFile)
       $(Build.SourcesDirectory)
 - task: CopyFiles@2
   inputs:
