@@ -7,7 +7,8 @@ then
 	echo "The BUILD_ROOT parameter is empty"
 	exit 1
 fi
-BUILD_ROOT=$1
+export BUILD_ROOT=$1
+echo "##vso[task.setvariable variable=BuildRoot]$BUILD_ROOT"
 echo "BUILD_ROOT set to: $BUILD_ROOT"
 
 # Second paramater is the target desination of the core dump files
