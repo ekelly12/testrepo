@@ -4,7 +4,7 @@ steps:
   continueOnError: true
   inputs:
     scriptSource: 'filePath'
-    scriptPath: $(Build.SourcesDirectory)/utils/core-handler.py
+    scriptPath: $(Build.SourcesDirectory)/CaptureCritical/core-handler.py
     arguments: >-
       reader
       $(CoreDest)
