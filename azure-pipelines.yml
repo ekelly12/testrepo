@@ -54,7 +54,7 @@ stages:
         steps:
           - bash: "echo $(Build.BinariesDirectory) > $(CORE_EXEC_PATH_FILE)"
             displayName: "Writing the exec path file"
-          - bash: "unlimit -Sc unlimited"
+          - bash: "ulimit -Sc unlimited"
           - template: templates/CaptureCriticalPrepare.yml
             parameters:
               CoreDest: /tmp/core
