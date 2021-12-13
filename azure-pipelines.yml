@@ -76,10 +76,10 @@ stages:
                 #output = p.stdout.read()
                 #res = p.communicate()
                 #print(output)
-                subprocess.call(["ulimit","-Sc unlimited"])
-                cmd = ["$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh","$(Build.BinariesDirectory)"]
-                subprocess.call(cmd)
-                #proc = Popen(cmd, stderr=subprocess.STDOUT)
+                #subprocess.call(["ulimit","-Sc unlimited"])
+                cmd = ["ulimit -Sc unlimited; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
+                #subprocess.call(cmd)
+                proc = Popen(cmd, shell=True, stderr=subprocess.STDOUT)
                 #proc.wait()
                 #rc = proc.returncode
           # - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
