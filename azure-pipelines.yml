@@ -72,10 +72,11 @@ stages:
               script: |
                 import subprocess
                 from subprocess import Popen, PIPE, STDOUT, DEVNULL
-                p = Popen("ulimit -Sc unlimited", shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-                output = p.stdout.read()
-                res = p.communicate()
-                print(output)
+                #p = Popen("ulimit -Sc unlimited", shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+                #output = p.stdout.read()
+                #res = p.communicate()
+                #print(output)
+                subprocess.call(["ulimit","-Sc unlimited"])
                 cmd = ["$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh","$(Build.BinariesDirectory)"]
                 subprocess.call(cmd)
                 #proc = Popen(cmd, stderr=subprocess.STDOUT)
