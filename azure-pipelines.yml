@@ -60,7 +60,7 @@ stages:
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
               ArtifactTargetFolder: $(Build.ArtifactStagingDirectory)
           - script: |
-                ulimit -Sc unlimited
+                echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc
                 $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
