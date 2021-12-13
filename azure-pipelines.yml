@@ -61,7 +61,6 @@ stages:
           - task: CmdLine@2
             inputs:
               script: |
-               cat /etc/security/limits.conf
                ulimit -Sc unlimited
                echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
@@ -73,14 +72,15 @@ stages:
               script: |
                 import subprocess
                 from subprocess import Popen, PIPE, STDOUT, DEVNULL
-                p = Popen("ulimit -Sc unlimited", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+                p = Popen("ulimit -Sc unlimited", shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
                 output = p.stdout.read()
                 res = p.communicate()
                 print(output)
-                cmd = "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
-                proc = Popen(cmd, stderr=subprocess.STDOUT)
-                proc.wait()
-                rc = proc.returncode
+                cmd = ["$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh","$(Build.BinariesDirectory)"]
+                subprocess.call(cmd)
+                #proc = Popen(cmd, stderr=subprocess.STDOUT)
+                #proc.wait()
+                #rc = proc.returncode
           # - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             # displayName: "Uncaught exception test"
           - template: templates/CaptureCriticalRun.yml
