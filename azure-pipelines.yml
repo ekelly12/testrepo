@@ -59,9 +59,17 @@ stages:
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
               ArtifactTargetFolder: $(Build.ArtifactStagingDirectory)
           - task: Bash@3
-            inputs: 
+            inputs:
               targetType: 'inline'
               script: echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc
+          - task: PythonScript@0
+            inputs:
+              scriptSource: 'inline'
+              script: |
+                p = Popen("ulimit -Sc", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+                output = p.stdout.read()
+                res = p.communicate()
+                print(output)
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
