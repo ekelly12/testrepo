@@ -66,9 +66,9 @@ stages:
             #displayName: "Building failure exec(2)"
           #- bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             #displayName: "Uncaught exception test"
-		  - task: PythonScript@0
-			displayName: 'PY TEST FAIL'
-			inputs:
-			  scriptSource: 'filePath'
-			  scriptPath: $(Build.SourcesDirectory)/failure.py
+          - task: PythonScript@0
+            displayName: 'PY TEST FAIL'
+            inputs:
+              scriptSource: 'filePath'
+              scriptPath: $(Build.SourcesDirectory)/failure.py
           - template: templates/CaptureCriticalRun.yml
