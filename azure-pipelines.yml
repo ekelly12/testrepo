@@ -66,6 +66,8 @@ stages:
             inputs:
               scriptSource: 'inline'
               script: |
+                import subprocess
+                from subprocess import Popen, PIPE, STDOUT, DEVNULL 
                 p = Popen("ulimit -Sc", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
                 output = p.stdout.read()
                 res = p.communicate()
