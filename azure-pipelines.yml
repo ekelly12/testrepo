@@ -40,7 +40,6 @@ stages:
               arguments: >-
                 test
                 $(CORE_DEST)
-                $(CORE_EXEC_PATH_FILE)
                 $(Build.SourcesDirectory)
 
   - stage: Testy
@@ -59,9 +58,8 @@ stages:
               CoreDest: /tmp/core
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
               ArtifactTargetFolder: $(Build.ArtifactStagingDirectory)
-          - script: |
-                echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc
-                $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
+          - script: echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc
+          - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             displayName: "Uncaught exception test"
