@@ -58,11 +58,6 @@ stages:
               CoreDest: /tmp/core
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
               ArtifactTargetFolder: $(Build.ArtifactStagingDirectory)
-          - task: CmdLine@2
-            inputs:
-              script: |
-               ulimit -Sc unlimited
-               echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
           - task: PythonScript@0
@@ -77,7 +72,7 @@ stages:
                 #res = p.communicate()
                 #print(output)
                 #subprocess.call(["ulimit","-Sc unlimited"])
-                cmd = ["ulimit -Sc unlimited; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
+                cmd = ["$(ulimit -Sc unlimited); $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
                 #subprocess.call(cmd)
                 proc = Popen(cmd, shell=True, stderr=subprocess.STDOUT)
                 #proc.wait()
