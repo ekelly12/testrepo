@@ -56,7 +56,6 @@ stages:
           - template: templates/CaptureCriticalPrepare.yml
             parameters:
               CoreDest: /tmp/core
-              ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
               ArtifactTargetFolder: $(Build.ArtifactStagingDirectory)
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
