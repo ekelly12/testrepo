@@ -13,7 +13,7 @@ OUT_DIR=$1
 echo "OUT_DIR set to: $OUT_DIR"
 
 # Set core dump file size limit.
-#ulimit -Sc unlimited
+ulimit -Sc unlimited
 
 coreFileSize=$(ulimit -Sc)
 echo "Core dump file size (soft)limit set to ($coreFileSize)"
