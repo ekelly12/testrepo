@@ -54,13 +54,13 @@ stages:
         steps:
           - bash: "echo $(Build.BinariesDirectory) > $(CORE_EXEC_PATH_FILE)"
             displayName: "Writing the exec path file"
-          - script: 'echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc'
           - template: templates/CaptureCriticalPrepare.yml
             parameters:
               CoreDest: /tmp/core
               ExecDirPathFile: $(CORE_EXEC_PATH_FILE)
               ArtifactTargetFolder: $(Build.ArtifactStagingDirectory)
           - bash: "$(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)"
+            script: 'echo "ulimit -Sc unlimited" >> ~/.bashrc && . ~/.bashrc'
             displayName: "Building failure exec(2)"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             displayName: "Uncaught exception test"
