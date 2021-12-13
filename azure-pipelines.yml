@@ -69,7 +69,7 @@ stages:
               script: |
                 import subprocess
                 from subprocess import Popen, PIPE, STDOUT, DEVNULL 
-                p = Popen("ulimit -Sc", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
+                p = Popen("cat ~/.bashrc", shell=True, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
                 output = p.stdout.read()
                 res = p.communicate()
                 print(output)
