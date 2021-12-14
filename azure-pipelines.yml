@@ -56,7 +56,7 @@ stages:
           - template: templates/CaptureCriticalPrepare.yml
             parameters:
               CoreDest: /tmp/core
-              ArtifactTargetFolder: $(Build.ArtifactStagingDirectory)
+              ArtifactTargetFolder: "$(Build.ArtifactStagingDirectory)/core"
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
           - task: PythonScript@0
