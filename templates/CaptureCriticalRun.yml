@@ -6,9 +6,9 @@ steps:
     scriptSource: 'filePath'
     scriptPath: $(Build.SourcesDirectory)/script/CaptureCritical/core-handler.py
     arguments: >-
-      --runmode=reader
-      --coretargetdir=$(CoreDest)
-      --utilroot=$(BuildRoot)
+      --runmode reader
+      --coretargetdir "$(CoreDest)"
+      --utilroot "$(BuildRoot)"
 - task: CopyFiles@2
   inputs:
     SourceFolder: $(CoreDest)

@@ -60,6 +60,7 @@ parser.add_argument(
 # parsing arguments.
 args = parser.parse_args()
 
+
 def out_add(message):
     if (bool(print_immediate)):
         print(message)
@@ -125,11 +126,15 @@ def run_read(core_dir):
 
 
 def run_stdin():
-    out_add('Received core dump with the given process name: ' + process_filename)
+    out_add(
+        'Received core dump with the given process name: ' +
+        process_filename)
     write_dump(core_target_dir, process_filename)
+
 
 def die():
     exit(1)
+
 
 def main():
     global util_root, core_target_dir, process_filename, test_flag, exit_code, gdb_gen_file_path, gdb_instructions_file_path
@@ -137,7 +142,8 @@ def main():
     # This script *should* be able to run in these modes:
     # 1) "reader" - Will scan core_target_dir for handled core dumps.
     # 2) "receiver" - Will receieve core dumps, via STDIN, from the kernel.
-    # 3) "test" - Will cause this script to set test_flag to True. Then run as "reader".
+    # 3) "test" - Will cause this script to set test_flag to True. Then run as
+    # "reader".
     if (run_mode == 'test'):
         test_flag = True
         run_mode = "reader"
@@ -145,12 +151,14 @@ def main():
         core_target_dir = args.coretargetdir
         util_root = args.utilroot
         gdb_gen_file_path = os.path.join(util_root, 'gdb-dump.sh')
-        gdb_instructions_file_path = os.path.join(util_root, 'gdb-dump-instructions.txt')
+        gdb_instructions_file_path = os.path.join(
+            util_root, 'gdb-dump-instructions.txt')
         run_read(core_target_dir)
     else:
         out_add("Didn't receive a correct run mode. Exiting.")
         exit_code = 1
     out_print()
+
 
 main()
 exit(exit_code)
