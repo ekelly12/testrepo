@@ -42,7 +42,7 @@ if [ -v $gdbInstalled ]
 then
 	echo "gdb is not installed."
 	echo "Attempting to install it, now."
-	sudo apt install gdb
+	apt install gdb
 else
 	echo "dbg is already installed."
 fi
@@ -55,5 +55,5 @@ then
 fi
 
 # Set the rules for the core dump.
-#sudo sysctl -w kernel.core_pattern="|/tmp/core-handler.py $coreDumpDir %e-%p-%s-%u.core"
-sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
+sysctl -w kernel.core_pattern="|/usr/share/apport/apport %p %s %c"
+#sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
