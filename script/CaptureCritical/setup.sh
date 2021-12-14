@@ -36,24 +36,5 @@ else
 	$BUILD_ROOT/cleanse-core-dump-files.sh $CORE_DEST_DIR
 fi
 
-# GDB *should definietly* be installed
-gdbInstalled=$(which gdb)
-if [ -v $gdbInstalled ]
-then
-	echo "gdb is not installed."
-	echo "Attempting to install it, now."
-	apt install gdb
-else
-	echo "dbg is already installed."
-fi
-
-# Did the install attempt work?
-gdbInstalled=$(which gdb)
-if [ -v $gdbInstalled ]
-then
-	echo "Failed to install gdb."
-fi
-
 # Set the rules for the core dump.
-sysctl -w kernel.core_pattern="|/usr/share/apport/apport %p %s %c"
-#sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
+sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
