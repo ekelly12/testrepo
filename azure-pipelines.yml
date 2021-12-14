@@ -18,7 +18,7 @@ stages:
           - name: CORE_DEST
             value: /tmp/core
         steps:
-          - bash: "$(Build.SourcesDirectory)/CaptureCritical/setup.sh $(Build.SourcesDirectory) $(CORE_DEST)"
+          - bash: "$(Build.SourcesDirectory)/script/CaptureCritical/setup.sh $(Build.SourcesDirectory) $(CORE_DEST)"
             displayName: "Setting up system-wide environment"
           - bash: "$(Build.SourcesDirectory)/isegfault/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)"
             displayName: "Building failure exec(1)"
@@ -36,7 +36,7 @@ stages:
             displayName: 'Run error handler test'
             inputs:
               scriptSource: 'filePath'
-              scriptPath: $(Build.SourcesDirectory)/CaptureCritical/core-handler.py
+              scriptPath: $(Build.SourcesDirectory)/script/CaptureCritical/core-handler.py
               arguments: >-
                 test
                 $(CORE_DEST)
@@ -66,17 +66,6 @@ stages:
               script: |
                 import subprocess
                 from subprocess import Popen, PIPE, STDOUT, DEVNULL
-                #p = Popen("ulimit -Sc unlimited", shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)
-                #output = p.stdout.read()
-                #res = p.communicate()
-                #print(output)
-                #subprocess.call(["ulimit","-Sc unlimited"])
-                cmd = [". $(Build.SourcesDirectory)/CaptureCritical/env.sh; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
-                #cmd = ["ulimit -Sc unlimited >/dev/null 2>&1; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
-                #subprocess.call(cmd)
+                cmd = [". $(Build.SourcesDirectory)/script/CaptureCritical/env.sh; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
                 proc = Popen(cmd, shell=True, stderr=subprocess.STDOUT)
-                #proc.wait()
-                #rc = proc.returncode
-          # - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
-            # displayName: "Uncaught exception test"
           - template: templates/CaptureCriticalRun.yml

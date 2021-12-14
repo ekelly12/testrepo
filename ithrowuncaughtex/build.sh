@@ -20,6 +20,6 @@ then
     mkdir $OUT_DIR
 fi
 
-COMPILE_STR="clang++ -g -I$BUILD_ROOT/ithrowuncaughtex -o \"$OUT_DIR/ithrowuncaughtex\" \"$BUILD_ROOT/ithrowuncaughtex/main.cpp\""
+COMPILE_STR="clang++ -g -O3 -DNDEBUG -I$BUILD_ROOT/ithrowuncaughtex -o \"$OUT_DIR/ithrowuncaughtex\" \"$BUILD_ROOT/ithrowuncaughtex/main.cpp\""
 echo $COMPILE_STR
 eval $COMPILE_STR
