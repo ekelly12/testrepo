@@ -32,15 +32,6 @@ stages:
             displayName: "Segmentation fault test"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             displayName: "Uncaught exception test"
-          - task: PythonScript@0
-            displayName: 'Run error handler test'
-            inputs:
-              scriptSource: 'filePath'
-              scriptPath: $(Build.SourcesDirectory)/script/CaptureCritical/core-handler.py
-              arguments: >-
-                test
-                $(CORE_DEST)
-                $(Build.SourcesDirectory)
 
   - stage: Testy
     displayName: "A test to see if what's built can be used within a separate stage"
