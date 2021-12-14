@@ -15,6 +15,6 @@ steps:
     Contents: '*.gz'
     TargetFolder: '$(ArtifactTargetFolder)'
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
+  displayName: 'Publish Artifact: core files'
   inputs:
     PathtoPublish: '$(ArtifactTargetFolder)'
