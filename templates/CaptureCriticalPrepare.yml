@@ -12,4 +12,4 @@ steps:
         echo "##vso[task.setvariable variable=CoreDest]${{ parameters.CoreDest }}"
         echo "##vso[task.setvariable variable=ArtifactTargetFolder]${{ parameters.ArtifactTargetFolder }}"
         if [ ! -d "${{ parameters.ArtifactTargetFolder }}" ]; then mkdir "${{ parameters.ArtifactTargetFolder }}"; fi
-        $(Build.SourcesDirectory)/script/CaptureCritical/setup.sh $(Build.SourcesDirectory)/script/CaptureCritical ${{ parameters.CoreDest }}
+        sudo $(Build.SourcesDirectory)/script/CaptureCritical/setup.sh $(Build.SourcesDirectory)/script/CaptureCritical ${{ parameters.CoreDest }}

@@ -18,7 +18,7 @@ stages:
           - name: CORE_DEST
             value: /tmp/core
         steps:
-          - bash: "$(Build.SourcesDirectory)/script/CaptureCritical/setup.sh $(Build.SourcesDirectory) $(CORE_DEST)"
+          - bash: "sudo $(Build.SourcesDirectory)/script/CaptureCritical/setup.sh $(Build.SourcesDirectory) $(CORE_DEST)"
             displayName: "Setting up system-wide environment"
           - bash: "$(Build.SourcesDirectory)/isegfault/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)"
             displayName: "Building failure exec(1)"
