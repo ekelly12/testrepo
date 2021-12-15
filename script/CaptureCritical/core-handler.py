@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# Copyright (C) Microsoft Corporation. All rights reserved.
 import argparse
 import sys
 import select
@@ -160,5 +161,6 @@ def main():
     out_print()
 
 
-main()
-exit(exit_code)
+if __name__ == "__main__":
+    main()
+    exit(exit_code)

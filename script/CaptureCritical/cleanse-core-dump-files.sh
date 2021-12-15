@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z $1 ]
+if [ -z "$1" ]
 then
 	echo "The core dump file directory was not passed in"
 	exit 1
