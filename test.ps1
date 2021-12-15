@@ -1,2 +1,2 @@
 Write-Host "To the host"
-Write-Output "Write output"
+Write-Output y | echo "Write output"
