@@ -4,7 +4,8 @@ trigger:
   - main
 
 stages:
-  - stage: Test PS
+  - stage: TestPS
+    displayName: Test PS
     steps:
       - task: PowerShell@1
         displayName: "FPGA Tests"
