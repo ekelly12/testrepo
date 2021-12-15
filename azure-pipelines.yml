@@ -3,11 +3,17 @@
 trigger:
   - main
 
-pool:
-  vmImage: ubuntu-latest
-
 stages:
+  - stage:
+  - task: PowerShell@1
+    displayName: "FPGA Tests"
+    inputs:
+      scriptType: filePath
+      scriptName: '$(Build.SourcesDirectory)/test.ps1'
+
   - stage: BuildAndTest
+    pool:
+      vmImage: ubuntu-latest
     displayName: "Build Enivornment (Ubuntu)"
     jobs:
       - job: CoreConfig
@@ -32,13 +38,10 @@ stages:
             displayName: "Segmentation fault test"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             displayName: "Uncaught exception test"
-          - task: PowerShell@1
-            displayName: "FPGA Tests"
-            inputs:
-              scriptType: filePath
-              scriptName: '$(Build.SourcesDirectory)/test.ps1'
 
   - stage: Testy
+    pool:
+      vmImage: ubuntu-latest
     displayName: "A test to see if what's built can be used within a separate stage"
     jobs:
       - job: ReRun
