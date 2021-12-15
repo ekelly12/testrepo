@@ -5,10 +5,6 @@ import sys
 import select
 import os
 import os.path
-import re
-import subprocess
-from subprocess import Popen, PIPE, STDOUT, DEVNULL
-import hashlib
 
 # Config
 print_to_term = False
@@ -70,16 +66,16 @@ def out_add(message):
 
 
 def out_print():
-    if (bool(print_to_term)):
+    if (bool(print_to_term) == True):
         for msg in term_output:
             print(msg)
-    if (bool(print_to_stdout)):
+    if (bool(print_to_stdout) == True):
         for msg in term_output:
             print(msg)
 
 
 def write_dump(target_dir, filename):
-    if not select.select([sys.stdin, ], [], [], 0.0)[0]:
+    if (not select.select([sys.stdin, ], [], [], 0.0)[0]):
         out_add("stdin has no data ready")
         out_print()
         exit(1)
@@ -118,8 +114,6 @@ def run_read(core_dir):
         if (bool(test_flag) == False):
             exit_code = 1
         full_path = os.path.join(core_dir, file)
-        # Determine if these files are handled by this script.
-        name_segments = file.split('-')
         # Create compressed versions to store as artifacts.
         command = "gzip -c " + full_path + " > " + full_path + ".gz"
         out_add("Running command: " + command)
@@ -138,7 +132,8 @@ def die():
 
 
 def main():
-    global util_root, core_target_dir, process_filename, test_flag, exit_code, gdb_gen_file_path, gdb_instructions_file_path
+    global util_root, core_target_dir, process_filename, test_flag
+    global exit_code, gdb_gen_file_path, gdb_instructions_file_path
     run_mode = args.runmode
     # This script *should* be able to run in these modes:
     # 1) "reader" - Will scan core_target_dir for handled core dumps.
