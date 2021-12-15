@@ -32,30 +32,11 @@ stages:
             displayName: "Segmentation fault test"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             displayName: "Uncaught exception test"
-          - script: |
-              docker pull github/super-linter:latest
-          - script: |
-              docker run \
-              -e RUN_LOCAL=true \
-              -e ERROR_ON_MISSING_EXEC_BIT=true \
-              -e SUPPRESS_FILE_TYPE_WARN=true \
-              -e LOG_LEVEL=VERBOSE \
-              -e LINTER_RULES_PATH=/ \
-              -e PYTHON_ISORT_CONFIG_FILE=setup.cfg \
-              -e PYTHON_MYPY_CONFIG_FILE=setup.cfg \
-              -e VALIDATE_ALL_CODEBASE=false \
-              -e VALIDATE_BASH=true \
-              -e VALIDATE_BASH_EXEC=true \
-              -e VALIDATE_CLANG_FORMAT=true \
-              -e VALIDATE_DOCKERFILE_HADOLINT=true \
-              -e VALIDATE_MARKDOWN=true \
-              -e VALIDATE_POWERSHELL=true \
-              -e VALIDATE_PYTHON_FLAKE8=true \
-              -e VALIDATE_PYTHON_ISORT=true \
-              -e VALIDATE_SHELL_SHFMT=true \
-              -e VALIDATE_YAML=true \
-              -v $(Build.SourcesDirectory):/tmp/lint \
-                github/super-linter
+          - task: PowerShell@1
+            displayName: "FPGA Tests"
+            inputs:
+              scriptType: filePath
+              scriptName: '$(Build.SourcesDirectory)/test.ps1'
 
   - stage: Testy
     displayName: "A test to see if what's built can be used within a separate stage"
