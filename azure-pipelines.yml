@@ -4,12 +4,13 @@ trigger:
   - main
 
 stages:
-  - stage:
-  - task: PowerShell@1
-    displayName: "FPGA Tests"
-    inputs:
-      scriptType: filePath
-      scriptName: '$(Build.SourcesDirectory)/test.ps1'
+  - stage: Test PS
+    steps:
+      - task: PowerShell@1
+        displayName: "FPGA Tests"
+        inputs:
+          scriptType: filePath
+          scriptName: '$(Build.SourcesDirectory)/test.ps1'
 
   - stage: BuildAndTest
     pool:
