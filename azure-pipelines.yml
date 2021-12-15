@@ -43,7 +43,7 @@ stages:
               -e LINTER_RULES_PATH=/ \
               -e PYTHON_ISORT_CONFIG_FILE=setup.cfg \
               -e PYTHON_MYPY_CONFIG_FILE=setup.cfg \
-              -e VALIDATE_ALL_CODEBASE=true \
+              -e VALIDATE_ALL_CODEBASE=false \
               -e VALIDATE_BASH=true \
               -e VALIDATE_BASH_EXEC=true \
               -e VALIDATE_CLANG_FORMAT=true \
