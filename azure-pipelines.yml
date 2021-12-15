@@ -34,14 +34,12 @@ stages:
             displayName: "Uncaught exception test"
           - script: |
               docker pull github/super-linter:latest
-            displayName: "Pull github/super-linter docker image"
           - script: |
               docker run \
               -e RUN_LOCAL=true \
               -e VALIDATE_ARM=true \
-              -v $(System.DefaultWorkingDirectory):/tmp/lint \
+              -v $(Build.SourcesDirectory):/tmp/lint \
                 github/super-linter
-              displayName: super-linter validation
 
   - stage: Testy
     displayName: "A test to see if what's built can be used within a separate stage"
