@@ -66,10 +66,10 @@ def out_add(message):
 
 
 def out_print():
-    if (bool(print_to_term) == True):
+    if (bool(print_to_term) is True):
         for msg in term_output:
             print(msg)
-    if (bool(print_to_stdout) == True):
+    if (bool(print_to_stdout) is True):
         for msg in term_output:
             print(msg)
 
@@ -101,7 +101,7 @@ def read_dir(path):
 def run_read(core_dir):
     global exit_code, test_flag
     files = read_dir(core_dir)
-    if (bool(files) == False):
+    if (bool(files) is False):
         out_add("Found no files")
         return
     # Loop through found core files.
@@ -111,7 +111,7 @@ def run_read(core_dir):
         # Reset the exit code here.
         # Always return an exit code greater than 1 if any core files are handled,
         # unless the test_flag bool is set to True
-        if (bool(test_flag) == False):
+        if (bool(test_flag) is False):
             exit_code = 1
         full_path = os.path.join(core_dir, file)
         # Create compressed versions to store as artifacts.
