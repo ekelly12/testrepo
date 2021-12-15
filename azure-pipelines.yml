@@ -5,6 +5,8 @@ trigger:
 
 stages:
   - stage: TestPS
+    pool:
+      vmImage: 'windows-2019'
     displayName: Test PS
     jobs:
       - job: Stuff
