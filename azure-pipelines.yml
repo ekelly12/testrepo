@@ -7,11 +7,14 @@ stages:
   - stage: TestPS
     displayName: Test PS
     jobs:
-      - task: PowerShell@1
-        displayName: "FPGA Tests"
-        inputs:
-          scriptType: filePath
-          scriptName: '$(Build.SourcesDirectory)/test.ps1'
+      - job: Stuff
+        displayName: EEEEK
+        steps:
+          - task: PowerShell@1
+            displayName: "FPGA Tests"
+            inputs:
+              scriptType: filePath
+              scriptName: '$(Build.SourcesDirectory)/test.ps1'
 
   - stage: BuildAndTest
     pool:
