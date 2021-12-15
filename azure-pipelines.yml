@@ -38,13 +38,9 @@ stages:
               docker run \
               -e RUN_LOCAL=true \
               -e ERROR_ON_MISSING_EXEC_BIT=true \
-              -e FILTER_REGEX_EXCLUDE=.*/thirdparty/.* \
               -e SUPPRESS_FILE_TYPE_WARN=true \
               -e LOG_LEVEL=VERBOSE \
               -e LINTER_RULES_PATH=/ \
-              -e DOCKERFILE_HADOLINT_FILE_NAME=.hadolint.yml \
-              -e MARKDOWN_CONFIG_FILE=.markdownlint.yml \
-              -e PYTHON_FLAKE8_CONFIG_FILE=.flake8 \
               -e PYTHON_ISORT_CONFIG_FILE=setup.cfg \
               -e PYTHON_MYPY_CONFIG_FILE=setup.cfg \
               -e VALIDATE_ALL_CODEBASE=true \
