@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 # Copyright (C) Microsoft Corporation. All rights reserved.
 import argparse
-import sys
-import select
 import os
 import os.path
+import select
+import sys
 
 # Config
 print_to_term = False
