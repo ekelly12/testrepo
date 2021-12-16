@@ -4,20 +4,6 @@ trigger:
   - main
 
 stages:
-  - stage: TestPS
-    pool:
-      vmImage: 'windows-2019'
-    displayName: Test PS
-    jobs:
-      - job: Stuff
-        displayName: EEEEK
-        steps:
-          - task: PowerShell@1
-            displayName: "FPGA Tests"
-            inputs:
-              scriptType: filePath
-              scriptName: '$(Build.SourcesDirectory)/test.ps1'
-
   - stage: BuildAndTest
     pool:
       vmImage: ubuntu-latest
