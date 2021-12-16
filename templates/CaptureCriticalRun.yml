@@ -1,11 +1,8 @@
-variables:
-- name: core_generated
-  value: false
-  type: boolean
-
 steps:
-- bash: ulimit -Sc
-  displayName: "Soft core file size limit"
+  variables:
+  - name: core_generated
+    value: false
+    type: boolean
 - task: PythonScript@0
   displayName: 'Running core dump handler'
   continueOnError: true
