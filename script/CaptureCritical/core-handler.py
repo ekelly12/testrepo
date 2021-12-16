@@ -14,11 +14,7 @@ test_flag = False
 
 # Path to where all resources for this utility resides.
 # Defaulted to the cwd.
-util_root = '.'
-# Path to the shell script that generates gdb output.
-gdb_gen_file_path = None
-# Path to the dbg instructions file.
-gdb_instructions_file_path = None
+util_root = os.getcwd()
 
 # Message output array.
 term_output = []
@@ -27,8 +23,9 @@ term_output = []
 line_separator = "\n===================\n"
 tab_indent = "\t ===> "
 
-# Script exit code.
+# Output vars
 exit_code = 0
+core_files_handled = 'false'
 
 parser = argparse.ArgumentParser(
     description='Handler for core files.')
@@ -118,7 +115,7 @@ def run_read(core_dir):
         command = "gzip -c " + full_path + " > " + full_path + ".gz"
         out_add("Running command: " + command)
         os.system(command)
-
+        core_files_handled = 'true'
 
 def run_stdin():
     out_add(
@@ -133,7 +130,7 @@ def die():
 
 def main():
     global util_root, core_target_dir, process_filename, test_flag
-    global exit_code, gdb_gen_file_path, gdb_instructions_file_path
+    global exit_code, core_files_handled
     run_mode = args.runmode
     # This script *should* be able to run in these modes:
     # 1) "reader" - Will scan core_target_dir for handled core dumps.
@@ -146,13 +143,12 @@ def main():
     if (run_mode == 'reader'):
         core_target_dir = args.coretargetdir
         util_root = args.utilroot
-        gdb_gen_file_path = os.path.join(util_root, 'gdb-dump.sh')
-        gdb_instructions_file_path = os.path.join(
-            util_root, 'gdb-dump-instructions.txt')
         run_read(core_target_dir)
     else:
         out_add("Didn't receive a correct run mode. Exiting.")
         exit_code = 1
+    # Create boolean var to indicate whether a core file dump was handled or not.
+    print('##vso[task.setvariable variable=files_generated]' + core_files_handled)
     out_print()
 
 

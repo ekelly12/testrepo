@@ -1,8 +1,3 @@
-parameters:
-  - name: core_generated
-    default: false
-    type: boolean
-
 steps:
 - task: PythonScript@0
   displayName: 'Running core dump handler'
@@ -16,13 +11,13 @@ steps:
       --utilroot "$(BuildRoot)"
 - task: CopyFiles@2
   displayName: "Copying core files to artifacts location"
-  condition: eq(variables.core_generated, 'true') 
+  condition: eq(variables.files_generated, 'true') 
   inputs:
     SourceFolder: $(CoreDest)
     Contents: '*.gz'
     TargetFolder: '$(ArtifactTargetFolder)'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: core files'
-  condition: eq(variables.core_generated, 'true')
+  condition: eq(variables.files_generated, 'true')
   inputs:
     PathtoPublish: '$(ArtifactTargetFolder)'
