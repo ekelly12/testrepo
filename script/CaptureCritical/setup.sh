@@ -33,7 +33,7 @@ echo "CORE_DEST_DIR set to: $CORE_DEST_DIR"
 # Create directory for core dumps to be written to.
 if [ ! -d "$CORE_DEST_DIR" ]
 then
-    mkdir "$CORE_DEST_DIR"
+    mkdir -p "$CORE_DEST_DIR"
     retCode=$?
     if [ ! $retCode == 0 ]
     then
