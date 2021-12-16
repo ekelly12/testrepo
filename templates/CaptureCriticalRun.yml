@@ -1,3 +1,8 @@
+variables:
+- name: core_generated
+  value: false
+  type: boolean
+
 steps:
 - bash: ulimit -Sc
   displayName: "Soft core file size limit"
@@ -12,11 +17,14 @@ steps:
       --coretargetdir "$(CoreDest)"
       --utilroot "$(BuildRoot)"
 - task: CopyFiles@2
+  displayName: "Copying core files to artifacts location"
+  condition: eq(variables.core_generated, 'true') 
   inputs:
     SourceFolder: $(CoreDest)
     Contents: '*.gz'
     TargetFolder: '$(ArtifactTargetFolder)'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: core files'
+  condition: eq(variables.core_generated, 'true')
   inputs:
     PathtoPublish: '$(ArtifactTargetFolder)'
