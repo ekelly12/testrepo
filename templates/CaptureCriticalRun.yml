@@ -9,6 +9,7 @@ steps:
       --runmode reader
       --coretargetdir "$(CoreDest)"
       --utilroot "$(BuildRoot)"
+- bash: ls -la "$(CoreDest)"
 - task: CopyFiles@2
   displayName: "Copying core files to artifacts location"
   condition: eq(variables.files_generated, 'true') 
