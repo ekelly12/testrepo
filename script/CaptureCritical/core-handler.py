@@ -96,7 +96,7 @@ def read_dir(path):
 
 
 def run_read(core_dir):
-    global exit_code, test_flag
+    global exit_code, test_flag, core_files_handled
     files = read_dir(core_dir)
     if (bool(files) is False):
         out_add("Found no files")
