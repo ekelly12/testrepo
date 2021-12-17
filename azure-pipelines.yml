@@ -47,7 +47,7 @@ stages:
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
           - bash: . $(Build.SourcesDirectory)/script/CaptureCritical/set-env.sh; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)
-          - bash: . $(Build.SourcesDirectory)/script/CaptureCritical/set-env.sh; ./$(Build.BinariesDirectory)/ithrowuncaughtex
+          - bash: . $(Build.SourcesDirectory)/script/CaptureCritical/set-env.sh; $(Build.BinariesDirectory)/ithrowuncaughtex
           - task: PythonScript@0
             displayName: "Running Python Script"
             inputs:
