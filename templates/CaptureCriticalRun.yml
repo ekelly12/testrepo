@@ -1,4 +1,5 @@
 steps:
+- bash: ls -la "$(CoreDest)"
 - task: PythonScript@0
   displayName: 'Running core dump handler'
   continueOnError: true
@@ -9,7 +10,6 @@ steps:
       --runmode reader
       --coretargetdir "$(CoreDest)"
       --utilroot "$(BuildRoot)"
-- bash: ls -la "$(CoreDest)"
 - task: CopyFiles@2
   displayName: "Copying core files to artifacts location"
   condition: eq(variables.files_generated, 'true') 
