@@ -46,6 +46,7 @@ stages:
               ArtifactTargetFolder: "$(Build.ArtifactStagingDirectory)/core"
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh . $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
+          - bash: . $(Build.SourcesDirectory)/script/CaptureCritical/set-env.sh; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)
           - task: PythonScript@0
             displayName: "Running Python Script"
             inputs:
