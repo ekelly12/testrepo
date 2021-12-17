@@ -1,6 +1,7 @@
 parameters:
   - name: CoreDest
     type: string
+    default: "/tmp/core"
   - name: ArtifactTargetFolder
     type: string
 

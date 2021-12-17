@@ -18,6 +18,9 @@ echo "OUT_DIR set to: $OUT_DIR"
 coreFileSize=$(ulimit -Sc)
 echo "Core dump file size (soft)limit set to ($coreFileSize)"
 
+corePattern=$(sudo sysctl -a | grep kernel.core_pattern)
+echo "Kernel core pattern: ($corePattern)"
+
 # Run the program and captire the exit code.
 progPath="$OUT_DIR/$programName"
 echo "Running $progPath"
