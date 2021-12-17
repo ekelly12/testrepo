@@ -3,11 +3,11 @@
 
 # NOTE: This script must be called as root or via sudo.
 
-#if ((EUID != 0)); then
-#  echo "Please run as root - current Effective UID = ${EUID}"
-#  id
-#  exit 1
-#fi
+if ((EUID != 0)); then
+  echo "Please run as root - current Effective UID = ${EUID}"
+  id
+  exit 1
+fi
 
 # Check for required parameters.
 # First parameter, BUILD_ROOT.
@@ -46,4 +46,5 @@ else
 fi
 
 # Set the rules for the core dump.
-sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
+echo "$CORE_DEST_DIR/%e-%p-%s-%u.core" > /proc/sys/kernel/core_pattern
+#sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
