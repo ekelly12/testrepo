@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 # Copyright (C) Microsoft Corporation. All rights reserved.
 
 # NOTE: This script must be called as root or via sudo.
