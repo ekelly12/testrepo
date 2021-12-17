@@ -46,4 +46,4 @@ else
 fi
 
 # Set the rules for the core dump.
-sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
+sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
