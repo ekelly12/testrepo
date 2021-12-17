@@ -39,8 +39,6 @@ stages:
       - job: ReRun
         displayName: "Re-run core handler"
         steps:
-          - bash: sudo -i
-            displayName: Running as root?
           - template: templates/CaptureCriticalPrepare.yml
             parameters:
               CoreDest: /tmp/core
