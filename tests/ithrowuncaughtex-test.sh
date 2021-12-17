@@ -21,6 +21,8 @@ echo "Core dump file size (soft)limit set to ($coreFileSize)"
 corePattern=$(sudo sysctl -a | grep kernel.core_pattern)
 echo "Kernel core pattern: ($corePattern)"
 
+if [ ! -d '/tmp/core' ]; then echo "Core target directory doesn't exist"; else echo "Core target dir exists"; fi
+
 # Run the program and captire the exit code.
 progPath="$OUT_DIR/$programName"
 echo "Running $progPath"
