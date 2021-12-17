@@ -32,6 +32,7 @@ returnCode=$($progPath || echo $?)
 if [ $returnCode ]
 then
 	echo "$programName expectedly returned an exit code of $returnCode(>0)."
+    echo "exit code returned: '$returnCode'"
 else
 	echo "$programName returned an exit code other than $expectedExitCode."
 	echo "exit code returned: '$returnCode'"
