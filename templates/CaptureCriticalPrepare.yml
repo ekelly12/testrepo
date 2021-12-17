@@ -4,6 +4,7 @@ parameters:
     default: "/tmp/core"
   - name: ArtifactTargetFolder
     type: string
+    default: "$(Build.ArtifactStagingDirectory)/core"
 
 steps:
   - task: CmdLine@2
