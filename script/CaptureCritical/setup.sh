@@ -1,14 +1,6 @@
 #!/usr/bin/bash
 # Copyright (C) Microsoft Corporation. All rights reserved.
 
-# NOTE: This script must be called as root or via sudo.
-
-#if ((EUID != 0)); then
-#  echo "Please run as root - current Effective UID = ${EUID}"
-#  id
-#  exit 1
-#fi
-
 # Check for required parameters.
 # First parameter, BUILD_ROOT.
 if [ -z "$1" ]
