@@ -3,7 +3,7 @@
 
 # This script is for use on the linux VMs allocated for pipelined tests.
 # It sourced to set the limit for any sub processes invoked via thecurrent shell.
-if [ -z "$1" ]; then echo "Missing the #1 parameter - core target path" && exit; fi
+if [ -z "$1" ]; then echo "Empty parameter 1 - core target path" && exit; fi
 
 export CORE_TARGET_DEST=$1
 ulimit -Sc unlimited
