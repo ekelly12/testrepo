@@ -14,9 +14,9 @@ stages:
            parameters:
              CoreDest: "/tmp/test"
          - task: CmdLine@2
-             inputs:
-               script: |
-                 echo $(CoreDest)
+           inputs:
+             script: |
+               echo $(CoreDest)
 
   - stage: BuildAndTest
     pool:
