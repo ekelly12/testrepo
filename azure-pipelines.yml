@@ -16,7 +16,7 @@ stages:
          - task: CmdLine@2
            inputs:
              powershell: |
-               echo $(CoreDest)
+               echo $(CoreDest);
                Write-Output "'$(CoreDest)'"
                
 
