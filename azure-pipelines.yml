@@ -16,7 +16,7 @@ stages:
          - task: CmdLine@2
            inputs:
              powershell: |
-               Write-Host "'$(CoreDest)'"
+               Write-Ouput "'$(CoreDest)'"
 
   - stage: BuildAndTest
     pool:
