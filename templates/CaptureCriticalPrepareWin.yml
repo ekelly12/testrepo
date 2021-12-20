@@ -19,5 +19,4 @@ steps:
       script: |
         echo ${{ parameters.CoreDest }} ^
         & echo "##vso[task.setvariable variable=CoreDest]${{ parameters.CoreDest }}" ^
-        & echo "##vso[task.setvariable variable=CoreArtifactTargetFolder]${{ parameters.CoreArtifactTargetFolder }}" ^
-        & if not exist "${{ parameters.CoreArtifactTargetFolder }}" mkdir -p "${{ parameters.CoreArtifactTargetFolder }}"
+        & echo "##vso[task.setvariable variable=CoreArtifactTargetFolder]${{ parameters.CoreArtifactTargetFolder }}"

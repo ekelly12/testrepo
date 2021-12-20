@@ -13,8 +13,7 @@ stages:
          - template: templates/CaptureCriticalPrepareWin.yml
          - task: CmdLine@1
            inputs:
-             script: |
-               echo "$(CoreDest)"
+             script: echo "$(CoreDest)"
 
   - stage: BuildAndTest
     pool:
