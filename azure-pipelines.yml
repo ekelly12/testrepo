@@ -14,7 +14,7 @@ stages:
          - task: CmdLine@1
            inputs:
              script: |
-               echo $(CoreDest)
+               echo "$(CoreDest)"
 
   - stage: BuildAndTest
     pool:
