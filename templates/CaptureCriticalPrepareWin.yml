@@ -7,7 +7,7 @@
 parameters:
   - name: CoreDest
     type: string
-    default: "$(Build.ArtifactStagingDirectory)\\core"
+    default: '$(Build.ArtifactStagingDirectory)\core'
   - name: CoreArtifactTargetFolder
     type: string
     default: "$(Build.ArtifactStagingDirectory)/core"
