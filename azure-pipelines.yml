@@ -15,8 +15,8 @@ stages:
              CoreDest: "/tmp/test"
          - task: CmdLine@2
            inputs:
-             script: |
-               echo "'$(CoreDest)'"
+             powershell: |
+               Write-Host "'$(CoreDest)'"
 
   - stage: BuildAndTest
     pool:
