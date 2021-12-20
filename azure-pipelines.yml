@@ -13,11 +13,9 @@ stages:
          - template: templates/CaptureCriticalPrepareWin.yml
            parameters:
              CoreDest: "/tmp/test"
-         - task: CmdLine@2
-           inputs:
-             powershell: |
-               echo $(CoreDest);
-               Write-Output "'$(CoreDest)'"
+         - powershell: |
+             echo $(CoreDest);
+             Write-Output "'$(CoreDest)'"
                
 
   - stage: BuildAndTest
