@@ -16,7 +16,8 @@ stages:
          - task: CmdLine@2
            inputs:
              script: |
-               echo "'${{ variables.CoreDest }}'"
+               echo "'${{ CoreDest }}'"
+               & echo "'${{ capturecrit.CoreDest }}'"
 
   - stage: BuildAndTest
     pool:

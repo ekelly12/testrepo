@@ -15,9 +15,10 @@ parameters:
 steps:
   - task: CmdLine@2
     displayName: "Preparing for core dump captures"
+    name: capturecrit
     inputs:
       script: |
         echo ${{ parameters.CoreDest }} ^
-        & echo "##vso[task.setvariable variable=CoreDest]${{ parameters.CoreDest }}" ^
-        & echo "##vso[task.setvariable variable=CoreArtifactTargetFolder]${{ parameters.CoreArtifactTargetFolder }}" ^
+        & echo "##vso[task.setvariable variable=CoreDest;isoutput=true]${{ parameters.CoreDest }}" ^
+        & echo "##vso[task.setvariable variable=CoreArtifactTargetFolder;isoutput=true]${{ parameters.CoreArtifactTargetFolder }}" ^
         && if not exist "${{ parameters.CoreArtifactTargetFolder }}" mkdir -p "${{ parameters.CoreArtifactTargetFolder }}"
