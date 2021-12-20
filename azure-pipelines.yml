@@ -11,8 +11,8 @@ stages:
      - job:
        steps:
          - template: templates/CaptureCriticalPrepareWin.yml
-           parameters:
-             CoreDest: "/tmp/test"
+           #parameters:
+             #CoreDest: "/tmp/test"
          - task: CmdLine@2
            inputs:
              script: |
