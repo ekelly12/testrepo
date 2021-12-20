@@ -11,7 +11,7 @@ stages:
      - job:
        steps:
          - template: templates/CaptureCriticalPrepareWin.yml
-         - task: CmdLine@2
+         - task: CmdLine@1
            inputs:
              script: |
                echo $(CoreDest)
