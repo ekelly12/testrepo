@@ -13,10 +13,10 @@ stages:
          - template: templates/CaptureCriticalPrepareWin.yml
            parameters:
              CoreDest: "/tmp/test"
-         - powershell: |
-             echo $(CoreDest);
-             Write-Output "'$(CoreDest)'"
-               
+         - task: CmdLine@2
+             inputs:
+               script: |
+                 echo $(CoreDest)
 
   - stage: BuildAndTest
     pool:
