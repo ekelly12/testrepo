@@ -3,11 +3,16 @@
 trigger:
   - main
 
-pool:
-  vmImage: ubuntu-latest
-
 stages:
+  - stage: TestWiun
+    jobs:
+     - job:
+       steps:
+         - template: templates/CaptureCriticalPrepareWin.yml
+
   - stage: BuildAndTest
+    pool:
+      vmImage: ubuntu-latest
     displayName: "Build Enivornment (Ubuntu)"
     jobs:
       - job: CoreConfig
@@ -34,6 +39,8 @@ stages:
             displayName: "Uncaught exception test"
 
   - stage: Testy
+    pool:
+      vmImage: ubuntu-latest
     displayName: "A test to see if what's built can be used within a separate stage"
     jobs:
       - job: ReRun
