@@ -7,14 +7,16 @@
 $coreTarget = '/tmp/core'
 
 try {
- bash ./script2/CaptureCritical/set-env.sh $coreTarget
+ulimit -Sc $coreTarget
+mkdir -p "$coreTarget"
+touch "$coreTarget"/test.core # testing
+# sysctl requires sudo
+sudo sysctl -w kernel.core_pattern="$coreTarget/%e-%p-%s-%u.core"
 }
 catch {
-    Write-Host "Failed: $_"
+    Write-Host $_
 }
 (Get-ChildItem -Path $coreTarget -Filter "*.core").FullName
-
-./out/isegfault
 
 $mine = $(ls -l .)
 Write-Host $mine

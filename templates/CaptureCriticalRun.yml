@@ -1,6 +1,7 @@
 steps:
 - task: PythonScript@0
   displayName: 'Running core dump handler'
+  condition: always()
   continueOnError: true
   inputs:
     scriptSource: 'filePath'
