@@ -3,9 +3,9 @@
 
 # This script is for use on the linux VMs allocated for pipelined tests.
 # It sourced to set the limit for any sub processes invoked via thecurrent shell.
-if [ -z "$1" ]; then echo "Empty parameter 1 - core target path" && exit; fi
-
 CORE_TARGET_DEST=$1
+if [ -z "$CORE_TARGET_DEST" ]; then CORE_TARGET_DEST=/tmp/core; fi
+
 ulimit -Sc unlimited
 currUser=$(whoami)
 if [ ! -d "$CORE_TARGET_DEST" ]; then sudo mkdir -p "$CORE_TARGET_DEST"; fi
