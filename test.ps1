@@ -7,14 +7,16 @@
 $coreTarget = '/tmp/core'
 
 try {
- bash ./script2/CaptureCritical/set-env.sh $coreTarget
+ . ./script/CaptureCritical/set-env.sh $coreTarget
 }
 catch {
     Write-Host "Failed: $_"
 }
-(Get-ChildItem -Path $coreTarget -Filter "*.core").FullName
 
 ./out/isegfault
+./out/ithrowuncaughtex
 
-$mine = $(ls -l .)
+(Get-ChildItem -Path $coreTarget -Filter "*.core").FullName
+
+$mine = $(ls -l $coreTarget)
 Write-Host $mine

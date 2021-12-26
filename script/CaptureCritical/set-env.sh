@@ -1,3 +1,4 @@
+#!/bin/bash
 # Copyright (C) Microsoft Corporation. All rights reserved.
 
 # This script is for use on the linux VMs allocated for pipelined tests.
