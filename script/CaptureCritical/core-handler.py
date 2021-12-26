@@ -103,7 +103,7 @@ def run_read(core_dir):
         return
     # Loop through found core files.
     for file in files:
-        if (bool(file.endswith('.gz'))):
+        if (bool(file.endswith('.core')) is False):
             continue
         # Reset the exit code here.
         # Always return an exit code greater than 1 if any core files are handled,
@@ -111,11 +111,9 @@ def run_read(core_dir):
         if (bool(test_flag) is False):
             exit_code = 1
         full_path = os.path.join(core_dir, file)
-        # Create compressed versions to store as artifacts.
-        command = "gzip -c " + full_path + " > " + full_path + ".gz"
-        out_add("Running command: " + command)
-        os.system(command)
+        out_add("Found a core file at: " + full_path) 
         core_files_handled = 'true'
+
 
 def run_stdin():
     out_add(

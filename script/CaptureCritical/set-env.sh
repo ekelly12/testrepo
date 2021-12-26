@@ -9,6 +9,5 @@ ulimit -Sc unlimited
 currUser=$(whoami)
 if [ ! -d "$CORE_TARGET_DEST" ]; then sudo mkdir -p "$CORE_TARGET_DEST"; fi
 sudo chown $currUser "$CORE_TARGET_DEST"
-sudo touch "$CORE_TARGET_DEST"/test.core # testing
 # sysctl requires sudo
 sudo sysctl -w kernel.core_pattern="$CORE_TARGET_DEST/%e-%p-%s-%u.core"
