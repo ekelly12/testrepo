@@ -15,7 +15,7 @@ steps:
   condition: eq(variables.files_generated, 'true') 
   inputs:
     SourceFolder: $(CoreDest)
-    Contents: '*.gz'
+    Contents: '*.core'
     TargetFolder: '$(CoreArtifactTargetFolder)'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: core files'
