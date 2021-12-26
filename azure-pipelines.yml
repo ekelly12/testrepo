@@ -23,7 +23,7 @@ stages:
               script: |
                 import subprocess
                 from subprocess import Popen, PIPE, STDOUT, DEVNULL
-                cmd = ["bash $(Build.SourcesDirectory)/script/CaptureCritical/set-env.sh '$(CoreDest)'; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
+                cmd = [". $(Build.SourcesDirectory)/script/CaptureCritical/set-env.sh '$(CoreDest)'; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
                 proc = Popen(cmd, shell=True, stderr=subprocess.STDOUT)
           - template: templates/CaptureCriticalRun.yml
 
