@@ -4,6 +4,28 @@ trigger:
   - main
 
 stages:
+  - stage: Testy
+    pool:
+      vmImage: ubuntu-latest
+    displayName: "A test to see if what's built can be used within a separate stage"
+    jobs:
+      - job: ReRun
+        displayName: "Re-run core handler"
+        steps:
+          - template: templates/CaptureCriticalPrepareLinux.yml
+          - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)
+            displayName: "Building failure exec(2)"
+          - task: PythonScript@0
+            displayName: "Running Python Script"
+            inputs:
+              scriptSource: 'inline'
+              script: |
+                import subprocess
+                from subprocess import Popen, PIPE, STDOUT, DEVNULL
+                cmd = [". $(Build.SourcesDirectory)/script/CaptureCritical/set-env.sh '$(CoreDest)'; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
+                proc = Popen(cmd, shell=True, stderr=subprocess.STDOUT)
+          - template: templates/CaptureCriticalRun.yml
+
   - stage: TestWin
     pool:
       vmImage: 'windows-2019'
@@ -43,26 +65,3 @@ stages:
             displayName: "Segmentation fault test"
           - bash: "$(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"
             displayName: "Uncaught exception test"
-
-  - stage: Testy
-    pool:
-      vmImage: ubuntu-latest
-    displayName: "A test to see if what's built can be used within a separate stage"
-    jobs:
-      - job: ReRun
-        displayName: "Re-run core handler"
-        steps:
-          - template: templates/CaptureCriticalPrepareLinux.yml
-          - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)
-            displayName: "Building failure exec(2)"
-          - bash: exit 1
-          - task: PythonScript@0
-            displayName: "Running Python Script"
-            inputs:
-              scriptSource: 'inline'
-              script: |
-                import subprocess
-                from subprocess import Popen, PIPE, STDOUT, DEVNULL
-                cmd = [". $(Build.SourcesDirectory)/script/CaptureCritical/set-env.sh '$(CoreDest)'; $(Build.SourcesDirectory)/tests/ithrowuncaughtex-test.sh $(Build.BinariesDirectory)"]
-                proc = Popen(cmd, shell=True, stderr=subprocess.STDOUT)
-          - template: templates/CaptureCriticalRun.yml
