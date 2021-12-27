@@ -22,3 +22,4 @@ steps:
   condition: eq(variables.files_generated, 'true')
   inputs:
     PathtoPublish: '$(CoreArtifactTargetFolder)'
+    artifactName: 'linux-core' 
