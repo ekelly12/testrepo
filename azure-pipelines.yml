@@ -15,6 +15,7 @@ stages:
           - template: templates/CaptureCriticalPrepareLinux.yml
           - bash: sudo apt-get update --quiet && sudo apt-get install --yes --no-install-recommends --quiet --allow-downgrades gdb
           - bash: echo "$(CoreArtifactTargetFolder) and $(CoreDest)"
+          - bash: ./script/CaptureCritical/kill-test.sh
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
           - task: PythonScript@0
