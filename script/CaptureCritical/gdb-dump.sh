@@ -17,7 +17,7 @@ create_mini_dump_file()
 	coreFilePath="$1"
 	exeFilePath="$execDirPath/$2"
 	outputFile="$coreFilePath.minidump"
-    echo 'gdb -se "$exeFilePath" -x "$gdb_instructions_file" -c "$coreFilePath" -q -batch > "$outputFile"'
+    echo "gdb -se \"$exeFilePath\" -x \"$gdb_instructions_file\" -c \"$coreFilePath\" -q -batch > \"$outputFile\"'
     gdb -se "$exeFilePath" -x "$gdb_instructions_file" -c "$coreFilePath" -q -batch > "$outputFile"
     exit $?	
 }
