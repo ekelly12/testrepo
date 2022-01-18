@@ -1,5 +1,5 @@
 steps:
-- task: BashScript@1
+- task: Bash@3
   displayName: 'Capturing minidumps'
   inputs:
     filePath: $(Build.SourcesDirectory)/script/CaptureCritical/gdb-dump.sh
