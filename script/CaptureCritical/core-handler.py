@@ -125,7 +125,7 @@ def run_read(core_dir):
             core_files_handled = 'true'
         elif pathlib.Path(file).suffix == '.minidump':
             # This is a "minidump".
-            print_minidump(file)
+            print_minidump(os.path.join(core_dir,file))
 
 def run_stdin():
     out_add(
