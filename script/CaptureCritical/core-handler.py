@@ -103,7 +103,7 @@ def read_dir(path):
 
 def print_minidump(mini_dump_filepath):
     f = open(mini_dump_filepath, "r")
-    print("##[warning] " + f.readlines())
+    print("##[warning] " + '\n'.join(f.readlines()))
 
 def run_read(core_dir):
     global exit_code, test_flag, core_files_handled
