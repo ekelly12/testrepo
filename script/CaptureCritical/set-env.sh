@@ -6,7 +6,7 @@
 CORE_TARGET_DEST=$1
 if [ -z "$CORE_TARGET_DEST" ]; then CORE_TARGET_DEST=/tmp/core; fi
 
-ulimit -Sc unlimited
+echo "ulimit -c unlimited"
 currUser=$(whoami)
 if [ ! -d "$CORE_TARGET_DEST" ]; then sudo mkdir -p "$CORE_TARGET_DEST"; fi
 sudo chown $currUser "$CORE_TARGET_DEST"
