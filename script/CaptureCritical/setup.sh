@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 # Copyright (C) Microsoft Corporation. All rights reserved.
 
 # Check for required parameters.
@@ -38,4 +38,4 @@ else
 fi
 
 # Set the rules for the core dump.
-sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%e-%p-%s-%u.core"
+sudo sysctl -w kernel.core_pattern="$CORE_DEST_DIR/%f-%p-%s.core"
