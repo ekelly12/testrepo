@@ -13,7 +13,7 @@ stages:
         displayName: "Re-run core handler"
         steps:
           - template: templates/CaptureCriticalPrepareLinux.yml
-          - bash: apt-get update --quiet && apt-get install --yes --no-install-recommends --quiet --allow-downgrades gdb
+          - bash: sudo apt-get update --quiet && apt-get install --yes --no-install-recommends --quiet --allow-downgrades gdb
           - bash: echo "$(CoreArtifactTargetFolder) and $(CoreDest)"
           - bash: $(Build.SourcesDirectory)/ithrowuncaughtex/build.sh $(Build.SourcesDirectory) $(Build.BinariesDirectory)
             displayName: "Building failure exec(2)"
