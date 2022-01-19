@@ -34,6 +34,6 @@ handle_minidump()
 }
 
 # Find all core files in the core fiule source directory.
-for i in `find "$coreFileSoureDirPath" -maxdepth 1 -type f -name "*.core" -printf "%f\n"`; do
+for i in $(find "$coreFileSoureDirPath" -maxdepth 1 -type f -name "*.core" -printf "%f\n"); do
 	handle_minidump "$i"
 done
