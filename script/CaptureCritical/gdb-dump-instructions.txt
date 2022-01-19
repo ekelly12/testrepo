@@ -1,2 +1,3 @@
 bt full
 info registers
+disassemble $rip-64,+96

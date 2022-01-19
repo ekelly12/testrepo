@@ -17,11 +17,6 @@ test_flag = False
 # Defaulted to the cwd.
 util_root = os.getcwd()
 
-# Path to the shell script that generates gdb output.
-gdb_gen_file_path = None
-# Path to the dbg instructions file.
-gdb_instructions_file_path = None
-
 # Message output array.
 term_output = []
 
@@ -106,6 +101,7 @@ def print_minidump(mini_dump_filepath):
     print("##[warning] Backtrace and info registers")
     print("##[warning] " + ''.join(f.readlines()))
 
+
 def run_read(core_dir):
     global exit_code, test_flag, core_files_handled
     files = read_dir(core_dir)
@@ -122,11 +118,12 @@ def run_read(core_dir):
             if (bool(test_flag) is False):
                 exit_code = 1
             full_path = os.path.join(core_dir, file)
-            out_add("Found a core file at: " + full_path)
+            out_add("##[warning] Found a core file at: " + full_path)
             core_files_handled = 'true'
-        elif pathlib.Path(file).suffix == '.minidump':
+        elif pathlib.Path(file).suffix == '.txt':
             # This is a "minidump".
-            print_minidump(os.path.join(core_dir,file))
+            print_minidump(os.path.join(core_dir, file))
+
 
 def run_stdin():
     out_add(
@@ -141,7 +138,7 @@ def die():
 
 def main():
     global util_root, core_target_dir, process_filename, test_flag
-    global exit_code, core_files_handled, gdb_gen_file_path, gdb_instructions_file_path
+    global exit_code, core_files_handled
     run_mode = args.runmode
     # This script *should* be able to run in these modes:
     # 1) "reader" - Will scan core_target_dir for handled core dumps.
@@ -154,8 +151,6 @@ def main():
     if (run_mode == 'reader'):
         core_target_dir = args.coretargetdir
         util_root = args.utilroot
-        gdb_gen_file_path = os.path.join(util_root, 'gdb-dump.sh')
-        gdb_instructions_file_path = os.path.join(util_root, 'gdb-dump-instructions.txt')
         run_read(core_target_dir)
     else:
         out_add("Didn't receive a correct run mode. Exiting.")

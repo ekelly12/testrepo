@@ -3,10 +3,10 @@
 
 # Checking for required arguments.
 missingReqArg=0
-if [ -z $1 ]; then echo "Missing arg: core directory" && missingReqArg=1; fi
-if [ -z $2 ]; then echo "Missing arg: executable directory path" && missingReqArg=1; fi;
-if [ -z $3 ]; then echo "Missing arg: the path to the gdb instructions file to use" && missingReqArg=1; fi;
-if [ $missingReqArg -eq 1 ]; then exit; fi
+if [ -z "$1" ]; then echo "Missing arg: core directory" && missingReqArg=1; fi
+if [ -z "$2" ]; then echo "Missing arg: executable directory path" && missingReqArg=1; fi;
+if [ -z "$3" ]; then echo "Missing arg: the path to the gdb instructions file to use" && missingReqArg=1; fi;
+if [ $missingReqArg -eq 1 ]; then exit 1; fi
 
 coreFileSoureDirPath="$1"
 execDirPath="$2"
@@ -16,20 +16,20 @@ create_mini_dump_file()
 {
 	coreFilePath="$1"
 	exeFilePath="$execDirPath/$2"
-	outputFile="$coreFilePath.minidump"
+	outputFile="$coreFilePath.minidump.txt"
     echo "gdb -se \"$exeFilePath\" -x \"$gdb_instructions_file\" -c \"$coreFilePath\" -q -batch > \"$outputFile\""
     gdb -se "$exeFilePath" -x "$gdb_instructions_file" -c "$coreFilePath" -q -batch > "$outputFile"
-    exit $?	
 }
 
 handle_minidump()
 {
+    local splitIFS
+    local IFS
     coreFilePath="$1"
 	echo "Handling the core dump file at: $coreFilePath"
     IFS='-'
     read -rasplitIFS<<< "$1"
     exeName="${splitIFS[0]}"
-    IFS=''
     create_mini_dump_file "$coreFileSoureDirPath/$coreFilePath" "$exeName"
 }
 
