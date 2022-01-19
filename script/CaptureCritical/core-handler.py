@@ -98,8 +98,8 @@ def read_dir(path):
 
 def print_minidump(mini_dump_filepath):
     f = open(mini_dump_filepath, "r")
-    print("##[warning] Backtrace and info registers")
-    print("##[warning] " + ''.join(f.readlines()))
+    out_add("##[warning] Backtrace and info registers")
+    out_add("##[warning] " + ''.join(f.readlines()))
 
 
 def run_read(core_dir):
